@@ -56,13 +56,13 @@ private:
 	std::map<std::string,std::string> _shortSwitchMapping;
 	std::map<std::string, CLS> _switches;
 	std::vector<std::string> _arguments;
-	std::vector<std::string> _networkArguments;
-	std::vector<std::string> _mysqlArguments;
-	const static std::string _NETWORK_TYPE;
-	const static std::string _NETWORK_TYPE_SECURE;
-	const static std::string _MYSQL_TYPE;
+	//std::vector<std::string> _networkArguments;
+	//std::vector<std::string> _mysqlArguments;
+	//const static std::string _NETWORK_TYPE;
+	//const static std::string _NETWORK_TYPE_SECURE;
+	//const static std::string _MYSQL_TYPE;
 	void _setSwitchArguments(std::string currentSwitch,int argc,char* argv[],int& currentIndex,CLS& cls);
-	void _processMysqlArguments(std::string argument);
+	//void _processMysqlArguments(std::string argument);
 	std::string _getShortSwitchNameMapping(const std::string& shortName);
 	bool _shortNameExists(const std::string& shortName);
 	
@@ -73,9 +73,9 @@ public:
 	bool parse(int argc,char* argv[]);
 	bool hasSwitchSet(std::string name);
 	const std::vector<std::string>& getArguments();
-	const std::vector<std::string>& getNetworkArguments();
-	const std::vector<std::string>& getMysqlArguments();
-	bool hasMysqlArguments(){ if(_mysqlArguments.size()) return true; return false; }
+	//const std::vector<std::string>& getNetworkArguments();
+	//const std::vector<std::string>& getMysqlArguments();
+	//bool hasMysqlArguments(){ if(_mysqlArguments.size()) return true; return false; }
 	
 	void printHelp();
 	void printArguments();

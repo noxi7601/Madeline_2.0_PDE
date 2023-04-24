@@ -296,21 +296,21 @@ int main( int argc, char *argv[] ){
 		//
 		// Read data tables from network files:
 		//
-		std::vector<std::string> networkarguments = clp.getNetworkArguments();
-		for(unsigned i=0;i<networkarguments.size();i++){
-			dataTableParser.readNetworkFile(networkarguments[i]);
-		}
+		//std::vector<std::string> networkarguments = clp.getNetworkArguments();
+		//for(unsigned i=0;i<networkarguments.size();i++){
+		//	dataTableParser.readNetworkFile(networkarguments[i]);
+		//}
 		
 		//
 		// Read data from a mysql database table:
 		//
-		#ifdef MYSQLPP
-		if(clp.hasMysqlArguments()){
-			std::vector<std::string> mysqlarguments = clp.getMysqlArguments();
-			dataTableParser.connectMysql(mysqlarguments[0],mysqlarguments[1],mysqlarguments[2],mysqlarguments[3],mysqlarguments[4]);
-			dataTableParser.readMysql(mysqlarguments[5]);
-		}
-		#endif
+		//#ifdef MYSQLPP
+		//if(clp.hasMysqlArguments()){
+		//	std::vector<std::string> mysqlarguments = clp.getMysqlArguments();
+		//	dataTableParser.connectMysql(mysqlarguments[0],mysqlarguments[1],mysqlarguments[2],mysqlarguments[3],mysqlarguments[4]);
+		//	dataTableParser.readMysql(mysqlarguments[5]);
+		//}
+		//#endif
 		//
 		// Process data tables read by the parser
 		//

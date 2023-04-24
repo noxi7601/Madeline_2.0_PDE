@@ -29,37 +29,37 @@ ENABLE_TESTING()
 #
 # Check if there exists a system-provided BZip2
 #
-INCLUDE(FindBZip2)
-IF(BZIP2_FOUND)
-        INCLUDE_DIRECTORIES(${BZIP2_INCLUDE_DIR})
-        ADD_DEFINITIONS(${BZIP2_DEFINITIONS})
-        SET(requiredLibs ${requiredLibs} ${BZIP2_LIBRARIES})
-ELSE(BZIP2_FOUND)
-	#Add bzip2 built from local copy to the requiredLibs
-	INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/3rdParty/bzip2)
-        SET(requiredLibs ${requiredLibs} bzip2 )
-ENDIF(BZIP2_FOUND)
+#INCLUDE(FindBZip2)
+#IF(BZIP2_FOUND)
+#        INCLUDE_DIRECTORIES(${BZIP2_INCLUDE_DIR})
+#        ADD_DEFINITIONS(${BZIP2_DEFINITIONS})
+#        SET(requiredLibs ${requiredLibs} ${BZIP2_LIBRARIES})
+#ELSE(BZIP2_FOUND)
+#	#Add bzip2 built from local copy to the requiredLibs
+#	INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/3rdParty/bzip2)
+#        SET(requiredLibs ${requiredLibs} bzip2 )
+#ENDIF(BZIP2_FOUND)
 
 
 #
 # Recurse subdirectories:
 #
-ADD_SUBDIRECTORY(3rdParty)
-ADD_SUBDIRECTORY(po)
-ADD_SUBDIRECTORY(doxygen)
+#ADD_SUBDIRECTORY(3rdParty)
+#ADD_SUBDIRECTORY(po)
+#ADD_SUBDIRECTORY(doxygen)
 ADD_SUBDIRECTORY(src)
 
 INCLUDE_DIRECTORIES(${MADELINE_SOURCE_DIR} ${MADELINE_BINARY_DIR})
-INCLUDE(${CMAKE_ROOT}/Modules/FindDoxygen.cmake)
+#INCLUDE(${CMAKE_ROOT}/Modules/FindDoxygen.cmake)
 
-CONFIGURE_FILE(${MADELINE_SOURCE_DIR}/doxygen/Doxyfile.in ${MADELINE_BINARY_DIR}/doxygen/Doxyfile)
+#CONFIGURE_FILE(${MADELINE_SOURCE_DIR}/doxygen/Doxyfile.in ${MADELINE_BINARY_DIR}/doxygen/Doxyfile)
 
-INCLUDE( FindDoxygen )
-IF(DOXYGEN) 
-	ADD_CUSTOM_TARGET(api-docs ALL ${DOXYGEN} ${MADELINE_BINARY_DIR}/doxygen/Doxyfile DEPENDS ${MADELINE_SOURCE_DIR}/doxygen/Doxyfile.in)
-ELSE(DOXYGEN)
-	MESSAGE(STATUS "Unable to locate DOxygen : API Documentation will not be built!")
-ENDIF(DOXYGEN)
+#INCLUDE( FindDoxygen )
+#IF(DOXYGEN) 
+#	ADD_CUSTOM_TARGET(api-docs ALL ${DOXYGEN} ${MADELINE_BINARY_DIR}/doxygen/Doxyfile DEPENDS ${MADELINE_SOURCE_DIR}/doxygen/Doxyfile.in)
+#ELSE(DOXYGEN)
+#	MESSAGE(STATUS "Unable to locate DOxygen : API Documentation will not be built!")
+#ENDIF(DOXYGEN)
 
 #
 # Put compiled libraries and executables in specified directories:

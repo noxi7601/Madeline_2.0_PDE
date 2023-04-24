@@ -25,14 +25,14 @@
 //
 
 #include "Parser.h"
-#include "Compressor.h"
-#include "Network.h"
+//#include "Compressor.h"
+//#include "Network.h"
 #include "XMLTagManager.h"
 
 
-#ifdef MYSQLPP
-#include "Database.h"
-#endif
+//#ifdef MYSQLPP
+//#include "Database.h"
+//#endif
 
 #include "DelimitedTableParser.h"
 #include "MadelineTable.h"
@@ -92,7 +92,7 @@ void Parser::readFile(const std::string &fileName){
 	_fileTypeName = fileTypeClassifier.classifyByName();
 	
 	std::string fileData;
-	Compressor newCompressor;
+	//Compressor newCompressor;
 	
 	//
 	// Message for user:
@@ -111,8 +111,9 @@ void Parser::readFile(const std::string &fileName){
 		//
 		// Decompress into a std::string :
 		//
-		std::cout << "Parser::readFile(): Decompressing " << _fileTypeName << " file ...\n";
-		fileData = newCompressor.decompress(_fileName);
+		//std::cout << "Parser::readFile(): Decompressing " << _fileTypeName << " file ...\n";
+		//fileData = newCompressor.decompress(_fileName);
+		fileData = "";
 	}
 	else
 	{
@@ -177,87 +178,87 @@ void Parser::readFile(const std::string &fileName){
 ///
 /// readNetworkFile(): Reads a file across the network
 ///
-void Parser::readNetworkFile(const std::string &url)
-{
-	
-	_url = url;
-	
-	try
-	{
-	
-		//
-		// Message for user:
-		//
-		std::cout << "Parser::readNetworkFile(): Opening network file " << _url << " ...\n";
-		
-		Network net;
-		//
-		// The Network object reads the file and
-		// places it in a local file in /tmp:
-		//
-		net.getNetworkFile( _url.c_str() );
-		//
-		// Then just read the /tmp file like any other:
-		//
-		readFile( net.getFileName() );
-		
-		// Set flag if read successfully:
-		
-		_isANetworkFile=true;
-		
-	}
-	catch (std::exception &e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
-	    
-}
+//void Parser::readNetworkFile(const std::string &url)
+//{
+//	
+//	_url = url;
+//	
+//	try
+//	{
+//	
+//		//
+//		// Message for user:
+//		//
+//		std::cout << "Parser::readNetworkFile(): Opening network file " << _url << " ...\n";
+//		
+//		Network net;
+//		//
+//		// The Network object reads the file and
+//		// places it in a local file in /tmp:
+//		//
+//		net.getNetworkFile( _url.c_str() );
+//		//
+//		// Then just read the /tmp file like any other:
+//		//
+//		readFile( net.getFileName() );
+//		
+//		// Set flag if read successfully:
+//		
+//		_isANetworkFile=true;
+//		
+//	}
+//	catch (std::exception &e)
+//	{
+//		std::cerr << e.what() << std::endl;
+//	}
+//	    
+//}
 
-#ifdef MYSQLPP
-void Parser::connectMysql(std::string host,std::string port, std::string user, std::string password, std::string database)
-{
-	
-	if(port == std::string("")){
-		_currentMysqlTable.setup(host.c_str(),user.c_str(),password.c_str(),database.c_str());
-	}else{
-		// Convert port to an unsigned
-		unsigned mysqlport;
-		std::istringstream str(host);
-		str >> mysqlport;
-		_currentMysqlTable.setup(host.c_str(),user.c_str(),password.c_str(),database.c_str(),mysqlport);
-	}
-	  
-}
-
-void Parser::readMysql(std::string tableName)
-{
-	
-	//
-	// Setup select statement using table name:
-	//
-	std::string SQLQuery = "select * from ";
-	SQLQuery += tableName;
-	
-	//
-	// Read in table using mysql parser
-	//
-	_currentMysqlTable.readTable(SQLQuery.c_str());
-	
-	// DEBUG:
-	//_currentMysqlTable.display();
-	
-	//
-	// Create a new DataTable:
-	//
-	DataTable *sqlTable = new DataTable( _currentMysqlTable );
-	//
-	// Push the data table pointer onto the _tables vector:
-	//
-	_tables.push_back(sqlTable);  
-	
-}
-
-#endif
+//#ifdef MYSQLPP
+//void Parser::connectMysql(std::string host,std::string port, std::string user, std::string password, std::string database)
+//{
+//	
+//	if(port == std::string("")){
+//		_currentMysqlTable.setup(host.c_str(),user.c_str(),password.c_str(),database.c_str());
+//	}else{
+//		// Convert port to an unsigned
+//		unsigned mysqlport;
+//		std::istringstream str(host);
+//		str >> mysqlport;
+//		_currentMysqlTable.setup(host.c_str(),user.c_str(),password.c_str(),database.c_str(),mysqlport);
+//	}
+//	  
+//}
+//
+//void Parser::readMysql(std::string tableName)
+//{
+//	
+//	//
+//	// Setup select statement using table name:
+//	//
+//	std::string SQLQuery = "select * from ";
+//	SQLQuery += tableName;
+//	
+//	//
+//	// Read in table using mysql parser
+//	//
+//	_currentMysqlTable.readTable(SQLQuery.c_str());
+//	
+//	// DEBUG:
+//	//_currentMysqlTable.display();
+//	
+//	//
+//	// Create a new DataTable:
+//	//
+//	DataTable *sqlTable = new DataTable( _currentMysqlTable );
+//	//
+//	// Push the data table pointer onto the _tables vector:
+//	//
+//	_tables.push_back(sqlTable);  
+//	
+//}
+//
+//#endif
 
 //
 // _stringify

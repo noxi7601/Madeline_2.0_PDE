@@ -21,8 +21,8 @@ SET( SOURCES
 	ColumnClassifier.cpp 
 	ColumnClassifier.h 
 	ColumnOffset.h 
-	Compressor.cpp 
-	Compressor.h
+#	Compressor.cpp 
+#	Compressor.h
 	Consultand.cpp 
 	
 	Data.cpp 
@@ -84,8 +84,8 @@ SET( SOURCES
 	Message.h
 	Message.cpp
 	
-	Network.cpp 
-	Network.h 
+#	Network.cpp 
+#	Network.h 
 	NuclearFamily.cpp
 	Number.cpp 
 	Number.h 
@@ -166,102 +166,102 @@ ENDIF( LIBINTL_FOUND )
 #
 # Libcurl support:
 #
-INCLUDE( FindLibcurl )
-IF( LIBCURL_FOUND )
-	INCLUDE_DIRECTORIES(${LIBCURL_INCLUDE_DIR})
-	SET(requiredLibs ${requiredLibs} ${LIBCURL_LIBRARIES})
-ENDIF( LIBCURL_FOUND )
+#INCLUDE( FindLibcurl )
+#IF( LIBCURL_FOUND )
+#	INCLUDE_DIRECTORIES(${LIBCURL_INCLUDE_DIR})
+#	SET(requiredLibs ${requiredLibs} ${LIBCURL_LIBRARIES})
+#ENDIF( LIBCURL_FOUND )
 
 #
 # Optional MySQL++ support:
 #
-OPTION( WITH_MYSQLPP_SUPPORT "Build Madeline with MySQL database support" OFF )
-
-IF( WITH_MYSQLPP_SUPPORT )
-	
-	FIND_PACKAGE( MySQL REQUIRED)
-	FIND_PACKAGE( MySQL++ REQUIRED)	
-	IF (MYSQL_FOUND AND MYSQLPP_FOUND)
-		MESSAGE(STATUS "=== NOTE BENE: === Madeline will be built with MySQL support.")
-		SET_SOURCE_FILES_PROPERTIES( Database.h DataTable.h Parser.h  Parser.cpp Database.cpp DataTable.cpp main.cpp COMPILE_FLAGS -DMYSQLPP )
-		INCLUDE_DIRECTORIES(${MYSQL_INCLUDE_DIR} ${MYSQLPP_INCLUDE_DIR})
-		SET(optionalLibs ${optionalLibs} ${MYSQL_LIBRARIES} ${MYSQLPP_LIBRARIES})
-		SET( SOURCES ${SOURCES} Database.cpp )
-	ENDIF(MYSQL_FOUND AND MYSQLPP_FOUND)
-	
-ENDIF( WITH_MYSQLPP_SUPPORT )
+#OPTION( WITH_MYSQLPP_SUPPORT "Build Madeline with MySQL database support" OFF )
+#
+#IF( WITH_MYSQLPP_SUPPORT )
+#	
+#	FIND_PACKAGE( MySQL REQUIRED)
+#	FIND_PACKAGE( MySQL++ REQUIRED)	
+#	IF (MYSQL_FOUND AND MYSQLPP_FOUND)
+#		MESSAGE(STATUS "=== NOTE BENE: === Madeline will be built with MySQL support.")
+#		SET_SOURCE_FILES_PROPERTIES( Database.h DataTable.h Parser.h  Parser.cpp Database.cpp DataTable.cpp main.cpp COMPILE_FLAGS -DMYSQLPP )
+#		INCLUDE_DIRECTORIES(${MYSQL_INCLUDE_DIR} ${MYSQLPP_INCLUDE_DIR})
+#		SET(optionalLibs ${optionalLibs} ${MYSQL_LIBRARIES} ${MYSQLPP_LIBRARIES})
+#		SET( SOURCES ${SOURCES} Database.cpp )
+#	ENDIF(MYSQL_FOUND AND MYSQLPP_FOUND)
+#	
+#ENDIF( WITH_MYSQLPP_SUPPORT )
 
 #
 # Optional LASi support:
 #
-OPTION( WITH_LASi "Build Madeline with LASi support" OFF )
+#OPTION( WITH_LASi "Build Madeline with LASi support" OFF )
 
-IF( WITH_LASi )
+#IF( WITH_LASi )
 #
 # Check for Pango: Pango and Pangoft2 are combined here.
 #                  Pango is required for Unicode text layout support.
 #                  
-PKGCONFIG(pango  PANGO_INCLUDE_DIR PANGO_LINK_DIR PANGO_LINK_FLAGS PANGO_CFLAGS)
-IF(PANGO_INCLUDE_DIR)
-	INCLUDE_DIRECTORIES(${PANGO_INCLUDE_DIR})
-	LINK_DIRECTORIES(${PANGO_LINK_DIR})
-	ADD_DEFINITIONS(${PANGO_CFLAGS})
-ELSE (PANGO_INCLUDE_DIR)
-	MESSAGE(FATAL_ERROR "Pango (http://ftp.gnome.org/pub/GNOME/sources/pango/) is required to build Madeline.")
-ENDIF(PANGO_INCLUDE_DIR)
-
-PkGCONFIG(pangoft2 PANGOFT2_INCLUDE_DIR PANGOFT2_LINK_DIR PANGOFT2_LINK_FLAGS PANGOFT2_CFLAGS)
-IF(PANGOFT2_INCLUDE_DIR)
-	INCLUDE_DIRECTORIES(${PANGOFT2_INCLUDE_DIR})
-	LINK_DIRECTORIES(${PANGOFT2_LINK_DIR})
-	ADD_DEFINITIONS(${PANGOFT2_CFLAGS})
-ELSE (PANGOFT2_INCLUDE_DIR)
-	MESSAGE(FATAL_ERROR "Pangoft2 not found")
-ENDIF(PANGOFT2_INCLUDE_DIR)
+#PKGCONFIG(pango  PANGO_INCLUDE_DIR PANGO_LINK_DIR PANGO_LINK_FLAGS PANGO_CFLAGS)
+#IF(PANGO_INCLUDE_DIR)
+#	INCLUDE_DIRECTORIES(${PANGO_INCLUDE_DIR})
+#	LINK_DIRECTORIES(${PANGO_LINK_DIR})
+#	ADD_DEFINITIONS(${PANGO_CFLAGS})
+#ELSE (PANGO_INCLUDE_DIR)
+#	MESSAGE(FATAL_ERROR "Pango (http://ftp.gnome.org/pub/GNOME/sources/pango/) is required to build Madeline.")
+#ENDIF(PANGO_INCLUDE_DIR)
+#
+#PkGCONFIG(pangoft2 PANGOFT2_INCLUDE_DIR PANGOFT2_LINK_DIR PANGOFT2_LINK_FLAGS PANGOFT2_CFLAGS)
+#IF(PANGOFT2_INCLUDE_DIR)
+#	INCLUDE_DIRECTORIES(${PANGOFT2_INCLUDE_DIR})
+#	LINK_DIRECTORIES(${PANGOFT2_LINK_DIR})
+#	ADD_DEFINITIONS(${PANGOFT2_CFLAGS})
+#ELSE (PANGOFT2_INCLUDE_DIR)
+#	MESSAGE(FATAL_ERROR "Pangoft2 not found")
+#ENDIF(PANGOFT2_INCLUDE_DIR)
 
 #
 # Check for LASi: LASi is required for Unicode text layout and font metrics support.
 #
-PKGCONFIG(lasi LASI_INCLUDE_DIR LASI_LINK_DIR LASI_LINK_FLAGS LASI_CFLAGS)
-IF(LASI_INCLUDE_DIR)
-	INCLUDE_DIRECTORIES(${LASI_INCLUDE_DIR})
-	LINK_DIRECTORIES(${LASI_LINK_DIR})
-	ADD_DEFINITIONS(${LASI_CFLAGS})
-ELSE (LASI_INCLUDE_DIR)
-	MESSAGE(FATAL_ERROR "LASi (http://unifont.org/lasi/) is required to build Madeline.")
-ENDIF(LASI_INCLUDE_DIR)
-MESSAGE(STATUS "=== NOTA BENE: === Madeline will be built with LASi support.")
-ADD_DEFINITIONS(-DLASI)
-ENDIF(WITH_LASi)
+#PKGCONFIG(lasi LASI_INCLUDE_DIR LASI_LINK_DIR LASI_LINK_FLAGS LASI_CFLAGS)
+#IF(LASI_INCLUDE_DIR)
+#	INCLUDE_DIRECTORIES(${LASI_INCLUDE_DIR})
+#	LINK_DIRECTORIES(${LASI_LINK_DIR})
+#	ADD_DEFINITIONS(${LASI_CFLAGS})
+#ELSE (LASI_INCLUDE_DIR)
+#	MESSAGE(FATAL_ERROR "LASi (http://unifont.org/lasi/) is required to build Madeline.")
+#ENDIF(LASI_INCLUDE_DIR)
+#MESSAGE(STATUS "=== NOTA BENE: === Madeline will be built with LASi support.")
+#ADD_DEFINITIONS(-DLASI)
+#ENDIF(WITH_LASi)
 
 
 #
 # Check for SSL Library: SSL is required for network support.
 #
-FIND_LIBRARY(libssl NAMES ssl PATHS /usr/lib /usr/local/lib /usr/local/opt/openssl/lib )
-IF (NOT libssl)
-	MESSAGE(FATAL_ERROR "Missing LIBSSL library")
-ENDIF (NOT libssl)
+#FIND_LIBRARY(libssl NAMES ssl PATHS /usr/lib /usr/local/lib /usr/local/opt/openssl/lib )
+#IF (NOT libssl)
+#	MESSAGE(FATAL_ERROR "Missing LIBSSL library")
+#ENDIF (NOT libssl)
 
 #
 # Check for crypto library:
 #
-FIND_LIBRARY(libcrypto NAMES crypto PATHS /usr/lib /usr/local/lib /usr/local/opt/openssl/lib )
-IF(NOT libcrypto)
-	MESSAGE(FATAL_ERROR "Missing libcrypto library")
-ELSE (libcrypto)
-	SET(requiredLibs ${requiredLibs} ${libcrypto})
-ENDIF(NOT libcrypto)
+#FIND_LIBRARY(libcrypto NAMES crypto PATHS /usr/lib /usr/local/lib /usr/local/opt/openssl/lib )
+#IF(NOT libcrypto)
+#	MESSAGE(FATAL_ERROR "Missing libcrypto library")
+#ELSE (libcrypto)
+#	SET(requiredLibs ${requiredLibs} ${libcrypto})
+#ENDIF(NOT libcrypto)
 
 #
 # Check for zlib:
 #
-FIND_PACKAGE(ZLIB REQUIRED)
-IF(ZLIB_FOUND)
-	SET(requiredLibs ${requiredLibs} ${ZLIB_LIBRARIES})
-ELSE(ZLIB_FOUND)
-	MESSAGE(FATAL_ERROR "Missing libz library")
-ENDIF(ZLIB_FOUND)
+#FIND_PACKAGE(ZLIB REQUIRED)
+#IF(ZLIB_FOUND)
+#	SET(requiredLibs ${requiredLibs} ${ZLIB_LIBRARIES})
+#ELSE(ZLIB_FOUND)
+#	MESSAGE(FATAL_ERROR "Missing libz library")
+#ENDIF(ZLIB_FOUND)
 
 #
 # Config.h File generation:
@@ -284,12 +284,12 @@ ADD_EXECUTABLE(madeline2 ${SOURCES} )
 # Link target:
 #
 TARGET_LINK_LIBRARIES(madeline2 
-	unzip
+#	unzip
 	${requiredLibs} 
-	${libssl} 
-	${PANGO_LINK_FLAGS}
-	${PANGOFT2_LINK_FLAGS} 
-	${LASI_LINK_FLAGS}
+#	${libssl} 
+#	${PANGO_LINK_FLAGS}
+#	${PANGOFT2_LINK_FLAGS} 
+#	${LASI_LINK_FLAGS}
 	${optionalLibs}
 	${LIBXML2_LIBRARIES} 
 	stdc++	

@@ -34,9 +34,9 @@
 //
 ///////////////////////////////////
 
-const std::string CLP::_NETWORK_TYPE = "http://";
-const std::string CLP::_NETWORK_TYPE_SECURE = "https://";
-const std::string CLP::_MYSQL_TYPE = "mysql://";
+//const std::string CLP::_NETWORK_TYPE = "http://";
+//const std::string CLP::_NETWORK_TYPE_SECURE = "https://";
+//const std::string CLP::_MYSQL_TYPE = "mysql://";
 
 
 ///////////////////////////////////
@@ -101,69 +101,69 @@ void CLP::_setSwitchArguments(std::string currentSwitch,int argc,char* argv[],in
 //
 // _processMysqlArguments:
 //
-void CLP::_processMysqlArguments(std::string argument){
-	
-	// for warnings:
-	const char *methodName="CLP::_processMysqlArguments()";
-	
-	std::string::size_type loc;
-	std::string::size_type subloc;
-	
-	loc = argument.find("/");
-	if(loc != std::string::npos){
-		// User specified the host
-		std::string hostString = argument.substr(0,loc-1);
-		// Check if the port is specified too
-		subloc = hostString.find(":");
-		if(subloc != std::string::npos){
-			// Both host and port specified:
-			_mysqlArguments.push_back(hostString.substr(0,subloc-1));
-			_mysqlArguments.push_back(hostString.substr(subloc+1));
-		}else{
-			// Only the host specified
-			_mysqlArguments.push_back(hostString);
-			_mysqlArguments.push_back("");
-		}
-		argument = argument.erase(0,loc+1);
-	}else{
-		// Default values for host and port
-		_mysqlArguments.push_back("localhost");
-		_mysqlArguments.push_back("");
-	}
-	
-	loc = argument.find("@");
-	if(loc != std::string::npos){
-		// Split the string 
-		std::string userString = argument.substr(0,loc);
-		subloc = userString.find(":");
-		if(subloc != std::string::npos){
-			_mysqlArguments.push_back(userString.substr(0,subloc));
-			_mysqlArguments.push_back(userString.substr(subloc+1));
-		}else{
-			Warning(methodName,"Invalid Mysql Argument. 'username:passwd' is missing.\n Specify the argument in the following format 'mysql://[hostname:port/]username:passwd@database:table'");
-			_mysqlArguments.clear();
-			return;
-		}
-		std::string databaseString = argument.substr(loc+1);
-		subloc = databaseString.find(":");
-		if(subloc != std::string::npos){
-			_mysqlArguments.push_back(databaseString.substr(0,subloc));
-			_mysqlArguments.push_back(databaseString.substr(subloc+1));
-		}else{
-			Warning(methodName,"Invalid Mysql Argument. 'database:table' is missing.\n Specify the argument in the following format 'mysql://[hostname:port/]username:passwd@database:table'");
-			_mysqlArguments.clear();
-			return;
-		}
-		
-	}else{
-		Warning(methodName,"Invalid Mysql Argument.\n Specify the argument in the following format 'mysql://[hostname:port/]username:passwd@database:table'");
-		_mysqlArguments.clear();
-		return;
-	}
-	// Debug:
-	//for(unsigned i=0;i<_mysqlArguments.size();i++) std::cout << _mysqlArguments[i] << std::endl;
-	
-}
+//void CLP::_processMysqlArguments(std::string argument){
+//	
+//	// for warnings:
+//	const char *methodName="CLP::_processMysqlArguments()";
+//	
+//	std::string::size_type loc;
+//	std::string::size_type subloc;
+//	
+//	loc = argument.find("/");
+//	if(loc != std::string::npos){
+//		// User specified the host
+//		std::string hostString = argument.substr(0,loc-1);
+//		// Check if the port is specified too
+//		subloc = hostString.find(":");
+//		if(subloc != std::string::npos){
+//			// Both host and port specified:
+//			_mysqlArguments.push_back(hostString.substr(0,subloc-1));
+//			_mysqlArguments.push_back(hostString.substr(subloc+1));
+//		}else{
+//			// Only the host specified
+//			_mysqlArguments.push_back(hostString);
+//			_mysqlArguments.push_back("");
+//		}
+//		argument = argument.erase(0,loc+1);
+//	}else{
+//		// Default values for host and port
+//		_mysqlArguments.push_back("localhost");
+//		_mysqlArguments.push_back("");
+//	}
+//	
+//	loc = argument.find("@");
+//	if(loc != std::string::npos){
+//		// Split the string 
+//		std::string userString = argument.substr(0,loc);
+//		subloc = userString.find(":");
+//		if(subloc != std::string::npos){
+//			_mysqlArguments.push_back(userString.substr(0,subloc));
+//			_mysqlArguments.push_back(userString.substr(subloc+1));
+//		}else{
+//			Warning(methodName,"Invalid Mysql Argument. 'username:passwd' is missing.\n Specify the argument in the following format 'mysql://[hostname:port/]username:passwd@database:table'");
+//			_mysqlArguments.clear();
+//			return;
+//		}
+//		std::string databaseString = argument.substr(loc+1);
+//		subloc = databaseString.find(":");
+//		if(subloc != std::string::npos){
+//			_mysqlArguments.push_back(databaseString.substr(0,subloc));
+//			_mysqlArguments.push_back(databaseString.substr(subloc+1));
+//		}else{
+//			Warning(methodName,"Invalid Mysql Argument. 'database:table' is missing.\n Specify the argument in the following format 'mysql://[hostname:port/]username:passwd@database:table'");
+//			_mysqlArguments.clear();
+//			return;
+//		}
+//		
+//	}else{
+//		Warning(methodName,"Invalid Mysql Argument.\n Specify the argument in the following format 'mysql://[hostname:port/]username:passwd@database:table'");
+//		_mysqlArguments.clear();
+//		return;
+//	}
+//	// Debug:
+//	//for(unsigned i=0;i<_mysqlArguments.size();i++) std::cout << _mysqlArguments[i] << std::endl;
+//	
+//}
 
 
 ///////////////////////////////////
@@ -291,13 +291,13 @@ bool CLP::parse(int argc,char* argv[]){
 		}else{
 			std::string temp=argv[i];
 			
-			if((temp.size() > 7 && temp.substr(0,7) == _NETWORK_TYPE) || (temp.size() > 8 && temp.substr(0,8) == _NETWORK_TYPE_SECURE)){
-				_networkArguments.push_back(temp);
-			}else if(temp.size() > 8 && temp.substr(0,8) == _MYSQL_TYPE){
-				_processMysqlArguments(temp.substr(8));
-			}else{
+			//if((temp.size() > 7 && temp.substr(0,7) == _NETWORK_TYPE) || (temp.size() > 8 && temp.substr(0,8) == _NETWORK_TYPE_SECURE)){
+			//	_networkArguments.push_back(temp);
+			//}else if(temp.size() > 8 && temp.substr(0,8) == _MYSQL_TYPE){
+			//	_processMysqlArguments(temp.substr(8));
+			//}else{
 				_arguments.push_back(temp);
-			}
+			//}
 		}
 	}
 	return true;
@@ -316,20 +316,20 @@ const std::vector<std::string>& CLP::getArguments(){
 //
 // getNetworkArguments:
 //
-const std::vector<std::string>& CLP::getNetworkArguments(){
-	
-	return _networkArguments;
-	
-}
+//const std::vector<std::string>& CLP::getNetworkArguments(){
+//	
+//	return _networkArguments;
+//	
+//}
 
 //
 // getMysqlArguments:
 //
-const std::vector<std::string>& CLP::getMysqlArguments(){
-	
-	return _mysqlArguments;
-	
-}
+//const std::vector<std::string>& CLP::getMysqlArguments(){
+//	
+//	return _mysqlArguments;
+//	
+//}
 
 ///
 /// getSwitchArgument: Some of the command line switches require arguments.

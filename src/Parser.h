@@ -1,12 +1,12 @@
 #include <iostream>
 #include "DataTable.h"
-#include "Database.h"
+//#include "Database.h"
 #include "XMLTableParser.h"
 
 #include <stddef.h>
 #include <stdio.h>
 #include <sys/types.h>
-#include <dirent.h>
+//#include <dirent.h>
 #include <fstream>
 #include <sstream>
 
@@ -36,9 +36,9 @@ class Parser
 	
 private:
 	
-	std::string _url;                           // URL for network files
+	//std::string _url;                           // URL for network files
 	std::string _fileName;                      // fileName for disk file (also for network local /tmp file) 
-	bool _isANetworkFile;                       // true if a network file
+	//bool _isANetworkFile;                       // true if a network file
 	
 	std::vector<DataTable *> _tables;            // List of all data tables that have been read in
 	
@@ -56,9 +56,9 @@ private:
 	XMLTagManager _xmlTagManager;
 	
 	
-	#ifdef MYSQLPP
-	Database _currentMysqlTable;
-	#endif
+	//#ifdef MYSQLPP
+	//Database _currentMysqlTable;
+	//#endif
 	
 	// Read in the supported XML tags for use in parsing
 	void _readXMLFormats();
@@ -84,13 +84,13 @@ public:
 	void display();                                     /// Prints out all datatables that have been read in
 	
 	void readFile(const std::string &filename);        /// Read in a file, unzip it, parse it, and put the contents into a datatable
-	void readNetworkFile(const std::string &url);      /// Read in a file over the internet, unzip it, parse it, and put the contents into a datatable
+	//void readNetworkFile(const std::string &url);      /// Read in a file over the internet, unzip it, parse it, and put the contents into a datatable
 	
-	#ifdef MYSQLPP
-	void readMysql(std::string tableName);                  /// Read in a Mysql table, and put the contents into a datatable
-	void connectMysql(std::string host,std::string port, std::string user, std::string password, std::string database);  /// connect to a mysql table for reading/queries
-	void queryMysql(const char* sqlQuery) {_currentMysqlTable.query(sqlQuery);} /// query a mysql table with a select, insert, delete, or update command
-	#endif
+	//#ifdef MYSQLPP
+	//void readMysql(std::string tableName);                  /// Read in a Mysql table, and put the contents into a datatable
+	//void connectMysql(std::string host,std::string port, std::string user, std::string password, std::string database);  /// connect to a mysql table for reading/queries
+	//void queryMysql(const char* sqlQuery) {_currentMysqlTable.query(sqlQuery);} /// query a mysql table with a select, insert, delete, or update command
+	//#endif
 	
 	DataTable * getTable(unsigned i) { return _tables[i];}      /// returns a specific datatable
 	
@@ -98,8 +98,8 @@ public:
 	const int getNumberOfTables( void ) const { return _tables.size(); };
 	
 	std::string getName(void) const { return _fileName; };
-	std::string getURL(void)  const { return _url;      };
-	bool        isANetworkFile(void) const { return _isANetworkFile; };
+	//std::string getURL(void)  const { return _url;      };
+	//bool        isANetworkFile(void) const { return _isANetworkFile; };
 	
 };
 
