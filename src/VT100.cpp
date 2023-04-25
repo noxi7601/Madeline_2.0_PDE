@@ -46,43 +46,43 @@ std::ostream & operator << (std::ostream &os, enum vt100::command cmd){
 	// (and not some file redirection), then print out the v100::command.
 	// Otherwise, just return the reference to the ostream.
 	//
-	std::streambuf const *osBuf = os.rdbuf();
-	if( (osBuf==VTStreamState::coutBuf && VTStreamState::coutIsATerminal)
-	    || 
-	    (osBuf==VTStreamState::cerrBuf && VTStreamState::cerrIsATerminal)
-	){
-		switch(cmd){
-		case vt100::stopColor:
-			os << "\x1b[0m";
-			break;
-		case vt100::startBlack:
-			os << "\x1b[1;30m";
-			break;
-		case vt100::startRed:
-			os << "\x1b[1;31m";
-			break;
-		case vt100::startGreen:
-			os << "\x1b[1;32m";
-			break;
-		case vt100::startYellow:
-			os << "\x1b[1;33m";
-			break;
-		case vt100::startBlue:
-			os << "\x1b[1;34m";
-			break;
-		case vt100::startMagenta:
-			os << "\x1b[1;35m";
-			break;
-		case vt100::startCyan:
-			os << "\x1b[1;36m";
-			break;
-		case vt100::startWhite:
-			os << "\x1b[1;37m";
-			break;
-		default:
-			break;
-		}
-	}
+	//std::streambuf const *osBuf = os.rdbuf();
+	//if( (osBuf==VTStreamState::coutBuf && VTStreamState::coutIsATerminal)
+	//    || 
+	//    (osBuf==VTStreamState::cerrBuf && VTStreamState::cerrIsATerminal)
+	//){
+	//	switch(cmd){
+	//	case vt100::stopColor:
+	//		os << "\x1b[0m";
+	//		break;
+	//	case vt100::startBlack:
+	//		os << "\x1b[1;30m";
+	//		break;
+	//	case vt100::startRed:
+	//		os << "\x1b[1;31m";
+	//		break;
+	//	case vt100::startGreen:
+	//		os << "\x1b[1;32m";
+	//		break;
+	//	case vt100::startYellow:
+	//		os << "\x1b[1;33m";
+	//		break;
+	//	case vt100::startBlue:
+	//		os << "\x1b[1;34m";
+	//		break;
+	//	case vt100::startMagenta:
+	//		os << "\x1b[1;35m";
+	//		break;
+	//	case vt100::startCyan:
+	//		os << "\x1b[1;36m";
+	//		break;
+	//	case vt100::startWhite:
+	//		os << "\x1b[1;37m";
+	//		break;
+	//	default:
+	//		break;
+	//	}
+	//}
 	return os;
 }
 

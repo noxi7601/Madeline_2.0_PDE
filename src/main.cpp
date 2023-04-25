@@ -15,6 +15,8 @@
 #include "Utility.h"
 #include "VT100.h"
 
+#include "main2.h"
+
 int main( int argc, char *argv[] ){
 	
 	std::ifstream labelreader;
@@ -49,9 +51,9 @@ int main( int argc, char *argv[] ){
 	clp.addUsage("madeline2 [option]... [file]...\n\nIf input file is remote, specify the file\nname starting with 'http://' or 'https://'.\nTo retrieve the data from a mysql database use\n'mysql://[host:port/]username:passwd@database:table'");
 	
 	// Print statement:
-	std::cout << vt100::startBlue << "┌─────────────────────────────┐" << vt100::stopColor << std::endl;
-	std::cout << vt100::startBlue << "│ Welcome to Madeline 2.0 PDE │" << vt100::stopColor << std::endl;
-	std::cout << vt100::startBlue << "└─────────────────────────────┘" << vt100::stopColor << std::endl;
+	//std::cout << vt100::startBlue << "┌─────────────────────────────┐" << vt100::stopColor << std::endl;
+	//std::cout << vt100::startBlue << "│ Welcome to Madeline 2.0 PDE │" << vt100::stopColor << std::endl;
+	//std::cout << vt100::startBlue << "└─────────────────────────────┘" << vt100::stopColor << std::endl;
 	
 	if(clp.parse(argc,argv)){
 		// No error, process the switches
@@ -350,8 +352,8 @@ int main( int argc, char *argv[] ){
 		
 		
 	}
-	
-	return 0;
+
+	return start();
 	
 }
 

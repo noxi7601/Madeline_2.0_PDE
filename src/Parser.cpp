@@ -63,6 +63,38 @@ Parser::~Parser()
 	
 }
 
+///
+/// readXML: Reads a data
+///
+void Parser::readXML(std::string data) {
+    _fileName = "";
+    _fileType = FileTypeClassifier::XML;
+    _fileTypeName = "XML";
+
+	_readXML(data);
+}
+
+///
+/// readDelimited: Reads a data
+///
+void Parser::readDelimited(std::string data) {
+    _fileName = "";
+    _fileType = FileTypeClassifier::UTF8;
+    _fileTypeName = "UTF-8";
+
+	_readDelimited(data);
+}
+
+///
+/// readMadeline: Reads a data
+///
+void Parser::readMadeline(std::string data) {
+    _fileName = "";
+    _fileType = FileTypeClassifier::UTF8;
+    _fileTypeName = "UTF-8";
+
+	_readMadeline(data);
+}
 
 ///
 /// readFile: Reads a local file on disk

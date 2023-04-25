@@ -135,13 +135,16 @@ SET( SOURCES
 	XMLTagManager.cpp
 	
 	main.cpp 
+
+	main2.cpp
+	main2.h
 	
 )
 
 #
 # Where to look first for cmake modules, before ${CMAKE_ROOT}/Modules/ is checked:
 # 
-SET(CMAKE_MODULE_PATH "${MADELINE_SOURCE_DIR}/cmake/modules")
+#SET(CMAKE_MODULE_PATH "${MADELINE_SOURCE_DIR}/cmake/modules")
 
 #
 # Include FindPkgConfig.cmake
@@ -157,11 +160,11 @@ ENDIF( LIBXML2_FOUND )
 #
 # LibIntl support:
 #
-INCLUDE( FindLibintl )
-IF( LIBINTL_FOUND )
-	INCLUDE_DIRECTORIES(${LIBINTL_INCLUDE_DIR})
-	SET(optionalLibs ${optionalLibs} ${LIBINTL_LIBRARIES})
-ENDIF( LIBINTL_FOUND )
+#INCLUDE( FindLibintl )
+#IF( LIBINTL_FOUND )
+#	INCLUDE_DIRECTORIES(${LIBINTL_INCLUDE_DIR})
+#	SET(optionalLibs ${optionalLibs} ${LIBINTL_LIBRARIES})
+#ENDIF( LIBINTL_FOUND )
 
 #
 # Libcurl support:
@@ -263,6 +266,48 @@ ENDIF( LIBINTL_FOUND )
 #	MESSAGE(FATAL_ERROR "Missing libz library")
 #ENDIF(ZLIB_FOUND)
 
+FIND_LIBRARY(libintl NAMES intl PATHS /usr/lib /usr/local/lib)
+IF(NOT libintl)
+	MESSAGE(FATAL_ERROR "Missing libintl library")
+#ELSE (libintl)
+#	SET(requiredLibs ${requiredLibs} ${libintl})
+ENDIF(NOT libintl)
+
+FIND_LIBRARY(libxml2 NAMES xml2 PATHS /usr/lib /usr/local/lib)
+IF(NOT libxml2)
+	MESSAGE(FATAL_ERROR "Missing libxml2 library")
+#ELSE (libxml2)
+#	SET(requiredLibs ${requiredLibs} ${libxml2})
+ENDIF(NOT libxml2)
+
+FIND_LIBRARY(libiconv NAMES iconv PATHS /usr/lib /usr/local/lib)
+IF(NOT libiconv)
+	MESSAGE(FATAL_ERROR "Missing libiconv library")
+#ELSE (libiconv)
+#	SET(requiredLibs ${requiredLibs} ${libiconv})
+ENDIF(NOT libiconv)
+
+FIND_LIBRARY(libz NAMES z PATHS /usr/lib /usr/local/lib)
+IF(NOT libz)
+	MESSAGE(FATAL_ERROR "Missing libz library")
+#ELSE (libz)
+#	SET(requiredLibs ${requiredLibs} ${libz})
+ENDIF(NOT libz)
+
+FIND_LIBRARY(liblzma NAMES lzma PATHS /usr/lib /usr/local/lib)
+IF(NOT liblzma)
+	MESSAGE(FATAL_ERROR "Missing liblzma library")
+#ELSE (liblzma)
+#	SET(requiredLibs ${requiredLibs} ${liblzma})
+ENDIF(NOT liblzma)
+
+FIND_LIBRARY(libws2_32 NAMES ws2_32 PATHS /usr/lib /usr/local/lib)
+IF(NOT libws2_32)
+	MESSAGE(FATAL_ERROR "Missing libws2_32 library")
+#ELSE (libws2_32)
+#	SET(requiredLibs ${requiredLibs} ${libws2_32})
+ENDIF(NOT libws2_32)
+
 #
 # Config.h File generation:
 #
@@ -291,8 +336,14 @@ TARGET_LINK_LIBRARIES(madeline2
 #	${PANGOFT2_LINK_FLAGS} 
 #	${LASI_LINK_FLAGS}
 	${optionalLibs}
-	${LIBXML2_LIBRARIES} 
+#	${LIBXML2_LIBRARIES} 
 	stdc++	
+	intl
+	xml2
+	iconv
+	z
+	lzma
+	ws2_32
 )
 
 #

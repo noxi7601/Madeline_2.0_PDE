@@ -47,6 +47,8 @@
 //
 #include "limits.h"
 
+#include "main2.h"
+
 ///////////////////////////////////
 //
 // Private Methods:
@@ -1381,9 +1383,10 @@ void DrawingCanvas::show(const char* filename){
 	// Add the legends:
 	//
 	_drawLegends();
-	
-	std::ofstream svgfile(filename);
-	if(svgfile.is_open()){
+
+	//std::ofstream svgfile(filename);
+	//if(svgfile.is_open()){
+	    std::stringstream svgfile;
 		svgfile << _header.str() << std::endl;
 		
 		/////////////////////////////////////////////////////
@@ -1405,13 +1408,15 @@ void DrawingCanvas::show(const char* filename){
 		
 		svgfile << _body.str()   << std::endl;
 		svgfile << _footer.str() << std::endl;
-		svgfile.close();
+		//svgfile.close();
+
+		showTo(filename, svgfile.str());
 		
-	}else{
-		
-		std::cout << "Unable to open file " << filename << std::endl;
-		
-	}
+	//}else{
+	//	
+	//	std::cout << "Unable to open file " << filename << std::endl;
+	//	
+	//}
 }
 
 //
