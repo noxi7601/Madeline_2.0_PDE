@@ -319,7 +319,8 @@ void PedigreeSet::addPedigreesFromDataTable(const DataTable * p_pedigreeTable, u
 //
 // draw():
 //
-void PedigreeSet::draw(const DataTable *const pedigreeTable){
+std::string PedigreeSet::draw(const DataTable *const pedigreeTable){
+	std::string result;
 	
 	std::cout << vt100::startBlue << "┏ Start of    draw                      ┓" << vt100::stopColor << std::endl;
 	//
@@ -338,7 +339,7 @@ void PedigreeSet::draw(const DataTable *const pedigreeTable){
 	//
 	std::set<Pedigree*,comparePedigrees>::const_iterator it = _pedigrees.begin();
 	while(it != _pedigrees.end()){
-		(*it)->draw(&labelSet);
+		result = (*it)->draw(&labelSet);
 		//
 		// If --outputpedtable flag is set print the core/non-core fields to a tab delimited file with the name "FAMILY_ID"input.txt
 		//
@@ -351,7 +352,8 @@ void PedigreeSet::draw(const DataTable *const pedigreeTable){
 	}
 	
 	std::cout << vt100::startBlue << "┗ End of      draw                      ┛" << vt100::stopColor << std::endl;
-	
+
+	return result;
 }
 
 //

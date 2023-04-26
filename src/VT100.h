@@ -56,22 +56,22 @@ namespace vt100{
 // and whether they are really
 // a terminal device or not
 //
-class VTStreamState{
-private:
-	static VTStreamState vtStreamState;
-	
-public:
-	static const std::streambuf *coutBuf;
-	static const std::streambuf *cerrBuf;
-	static const bool coutIsATerminal;
-	static const bool cerrIsATerminal;
-	
-public:
-	
-	// Constructor:
-	VTStreamState();
-	
-};
+//class VTStreamState{
+//private:
+//	static VTStreamState vtStreamState;
+//
+//public:
+//	static const std::streambuf *coutBuf;
+//	static const std::streambuf *cerrBuf;
+//	static const bool coutIsATerminal;
+//	static const bool cerrIsATerminal;
+//
+//public:
+//
+//	// Constructor:
+//	VTStreamState();
+//
+//};
 
 //
 // Stream operator << for the vt100::commands:

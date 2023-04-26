@@ -1362,7 +1362,7 @@ void DrawingCanvas::drawLabelSet(Individual* pIndividual){
 ///
 /// show(): Generates the SVG drawing output file for each pedigree.
 ///
-void DrawingCanvas::show(const char* filename){
+std::string DrawingCanvas::show(const char* filename){
 	
 	// If label and/or icon legends are present
 	// readjust the x and y extents:
@@ -1410,8 +1410,17 @@ void DrawingCanvas::show(const char* filename){
 		svgfile << _footer.str() << std::endl;
 		//svgfile.close();
 
-		showTo(filename, svgfile.str());
-		
+		if (saveFlag) {
+			std::ofstream file(filename);
+			if(file.is_open()){
+				file << svgfile.str();
+				file.close();
+			} else {
+				std::cout << "Unable to open file " << filename << std::endl;
+			}
+		}
+
+		return svgfile.str();
 	//}else{
 	//	
 	//	std::cout << "Unable to open file " << filename << std::endl;
@@ -2195,3 +2204,4 @@ void DrawingCanvas::drawMitochondrialSymbol(double x,double y){
 	
 }
 
+bool DrawingCanvas::saveFlag = true;

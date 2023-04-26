@@ -57,7 +57,7 @@ public:
 	void checkParentChildDOB();
 	void checkPregnancyStateValidity();
 	void computePedigreeWidth(const std::string& sortField,bool dobSortOrder);
-	void draw(const LabelSet* labelSet);
+	std::string draw(const LabelSet* labelSet);
 	// Debug:
 	void display() const;   // Prints out all pedigrees that have been read in
 	

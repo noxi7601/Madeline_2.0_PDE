@@ -2399,8 +2399,8 @@ void Pedigree::computePedigreeWidth(const std::string& sortField,bool dobSortOrd
 /// draw: Draws a pedigree for each family on a separate SVG canvas and outputs them to separate files.
 /// The output file names correspond to the family ids.
 ///
-void Pedigree::draw(const LabelSet* labelSet){
-	
+std::string Pedigree::draw(const LabelSet* labelSet){
+	std::string result;
 	
 	// Instantiate a drawing canvas:
 	DrawingCanvas dc(labelSet,"XGA"); 
@@ -2411,7 +2411,7 @@ void Pedigree::draw(const LabelSet* labelSet){
 	
 	
 	// If there is only one individual in a Pedigree and is UNCONNECTED return:
-	if(_descentTrees.size() == 0){ return; }
+	if(_descentTrees.size() == 0){ return result; }
 	
 	
 	// Start the drawing with the group tag
@@ -2533,9 +2533,10 @@ void Pedigree::draw(const LabelSet* labelSet){
 	//
 	// Print out the drawing:
 	//
-	dc.show(drawingFileName.c_str());
+	result = dc.show(drawingFileName.c_str());
 	std::cout << "Pedigree output file is “" << drawingFileName << "”" << std::endl; 
-	
+
+	return result;
 }
 
 

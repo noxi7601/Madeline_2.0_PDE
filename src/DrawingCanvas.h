@@ -151,7 +151,7 @@ public:
 	void drawLabelSet(Individual* pIndividual);
 	void drawSuperscriptData(Individual *pIndividual,double x, double y);
 	void drawEncircledText(std::string text,double x,double y,double xradius, double yradius,const std::string& myclass=std::string(""));
-	void show(const char* filename);
+	std::string show(const char* filename);
 	
 	// Getters:
 	double getXMinimum();
@@ -178,7 +178,8 @@ public:
 	void drawOvumSymbol(double x,double y);
 	void drawEntwinedRingsSymbol(double x,double y);
 	void drawMitochondrialSymbol(double x,double y);
-	
+
+	static bool saveFlag;
 };
 
 #endif

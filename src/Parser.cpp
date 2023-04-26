@@ -42,6 +42,31 @@
 // DEBUG:
 #include <iostream>
 
+std::string stringify(char* data, int length) {
+	std::string result;
+
+	char *p;
+	char *end;
+	for(p = data, end = data + length; p < end; p++) {
+		if (*p == '\r') {
+			if ( p < end - 1 && *(p + 1) == '\n') {
+				result += '\n';
+				p++;
+			} else {
+				result += '\n';
+			}
+		} else if (*p == (char) 0xE2 && p < end - 2 && *(p + 1) == (char) 0x80 && *(p + 2) == (char) 0xA9) {
+			result += '\n';
+			p += 2;
+
+		} else {
+			result += *p;
+		}
+	}
+
+	return result;
+}
+
 Parser::Parser(){};
 
 //
@@ -66,34 +91,34 @@ Parser::~Parser()
 ///
 /// readXML: Reads a data
 ///
-void Parser::readXML(std::string data) {
+void Parser::readXML(const char* data) {
     _fileName = "";
     _fileType = FileTypeClassifier::XML;
     _fileTypeName = "XML";
 
-	_readXML(data);
+	_readXML(stringify(const_cast<char*>(data), strlen(data)));
 }
 
 ///
 /// readDelimited: Reads a data
 ///
-void Parser::readDelimited(std::string data) {
+void Parser::readDelimited(const char* data) {
     _fileName = "";
     _fileType = FileTypeClassifier::UTF8;
     _fileTypeName = "UTF-8";
 
-	_readDelimited(data);
+	_readDelimited(stringify(const_cast<char*>(data), strlen(data)));
 }
 
 ///
 /// readMadeline: Reads a data
 ///
-void Parser::readMadeline(std::string data) {
+void Parser::readMadeline(const char* data) {
     _fileName = "";
     _fileType = FileTypeClassifier::UTF8;
     _fileTypeName = "UTF-8";
 
-	_readMadeline(data);
+	_readMadeline(stringify(const_cast<char*>(data), strlen(data)));
 }
 
 ///
@@ -135,19 +160,18 @@ void Parser::readFile(const std::string &fileName){
 	// If the file is compressed, decompress it into a std::string. 
 	// Otherwise, read it into a std::string.
 	//
-	if( _fileType==FileTypeClassifier::PKZIP || 
-	    _fileType==FileTypeClassifier::GZIP  || 
-	    _fileType==FileTypeClassifier::BZIP2
-	)
-	{
-		//
-		// Decompress into a std::string :
-		//
-		//std::cout << "Parser::readFile(): Decompressing " << _fileTypeName << " file ...\n";
-		//fileData = newCompressor.decompress(_fileName);
-		fileData = "";
-	}
-	else
+	//if( _fileType==FileTypeClassifier::PKZIP ||
+	//    _fileType==FileTypeClassifier::GZIP  ||
+	//    _fileType==FileTypeClassifier::BZIP2
+	//)
+	//{
+	//	//
+	//	// Decompress into a std::string :
+	//	//
+	//	std::cout << "Parser::readFile(): Decompressing " << _fileTypeName << " file ...\n";
+	//	fileData = newCompressor.decompress(_fileName);
+	//}
+	//else
 	{
 		//
 		// Read into a std::string :

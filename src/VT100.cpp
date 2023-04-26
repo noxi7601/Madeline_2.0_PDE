@@ -27,18 +27,18 @@
 
 #include "VT100.h"
 
-VTStreamState VTStreamState::vtStreamState;
-const std::streambuf *VTStreamState::coutBuf;
-const std::streambuf *VTStreamState::cerrBuf;
-const bool VTStreamState::coutIsATerminal=isatty(fileno(stdout));
-const bool VTStreamState::cerrIsATerminal=isatty(fileno(stderr));
-
-VTStreamState::VTStreamState(){
-	
-	coutBuf=std::cout.rdbuf();
-	cerrBuf=std::cerr.rdbuf();
-	
-}
+//VTStreamState VTStreamState::vtStreamState;
+//const std::streambuf *VTStreamState::coutBuf;
+//const std::streambuf *VTStreamState::cerrBuf;
+//const bool VTStreamState::coutIsATerminal=isatty(fileno(stdout));
+//const bool VTStreamState::cerrIsATerminal=isatty(fileno(stderr));
+//
+//VTStreamState::VTStreamState(){
+//
+//	coutBuf=std::cout.rdbuf();
+//	cerrBuf=std::cerr.rdbuf();
+//
+//}
 std::ostream & operator << (std::ostream &os, enum vt100::command cmd){
 	
 	//

@@ -12,10 +12,38 @@
 #include "PedigreeSet.h"
 #include "Data.h"
 #include "DrawingMetrics.h"
+#include "DrawingCanvas.h"
 #include "Utility.h"
 #include "VT100.h"
 
 #include "main2.h"
+
+std::string build_real(const char* data) {
+	std::string result;
+
+	std::ofstream file("input.data");
+	if (file.is_open()) {
+		file << data;
+		file.close();
+	}
+
+	Parser parser;
+	parser.readDelimited(data);
+
+	for (int i = 0 ; i < parser.getNumberOfTables(); i++) {
+		DataTable* dataTable = parser.getTable(i);
+		if (dataTable->getTableType() == DataTable::PEDIGREE ) {
+			std::vector<std::string> columns;
+			dataTable->toggleColumnsForPedigree(columns);
+
+			PedigreeSet pedigreeSet;
+			pedigreeSet.addPedigreesFromDataTable(dataTable, i, "");
+			result = pedigreeSet.draw(dataTable);
+		}
+	}
+
+	return result;
+}
 
 int main( int argc, char *argv[] ){
 	
@@ -26,7 +54,7 @@ int main( int argc, char *argv[] ){
 	
 	// ABCDEFGH:
 	clp.addSwitch("--bw","-b","Print pedigrees in black and white");
-	clp.addSwitch("--collapsed","-k","“Collapse” multiple individuals into groups (requires “Collapsed” data column)");
+	clp.addSwitch("--collapsed","-k","\"Collapse\" multiple individuals into groups (requires \"Collapsed\" data column)");
 	clp.addSwitch("--color","-c","Print pedigrees in color");
 	clp.addSwitch("--custom-icon-colors","-C","Specify a comma- and semicolon-delimited list of custom icon shading color codes in HTML/CSS hex format.",1);
 	clp.addSwitch("--debug","-d","Print run-time progress messages");
@@ -48,7 +76,7 @@ int main( int argc, char *argv[] ){
 	clp.addSwitch("--sort","-s","Field based on which siblings are sorted",1);
 	clp.addSwitch("--scalable","-S","Make the SVG output scalable");
 	clp.addSwitch("--version","-v","Print version and exit");
-	clp.addUsage("madeline2 [option]... [file]...\n\nIf input file is remote, specify the file\nname starting with 'http://' or 'https://'.\nTo retrieve the data from a mysql database use\n'mysql://[host:port/]username:passwd@database:table'");
+	clp.addUsage("madeline2 [option]... [file]...");
 	
 	// Print statement:
 	//std::cout << vt100::startBlue << "┌─────────────────────────────┐" << vt100::stopColor << std::endl;
@@ -353,6 +381,9 @@ int main( int argc, char *argv[] ){
 		
 	}
 
+	DrawingCanvas::saveFlag = false;
+
+	build = build_real;
 	return start();
 	
 }

@@ -36,7 +36,7 @@ public:
 	PedigreeSet(){ }
 	~PedigreeSet();
 	void addPedigreesFromDataTable(const DataTable * p_pedigreeTable,unsigned tableIndex,const std::string& sortField);
-	void draw(const DataTable *const pedigreeTable);
+	std::string draw(const DataTable *const pedigreeTable);
 	// Debug:
 	void display();                          // Prints out all pedigrees that have been read in
 
