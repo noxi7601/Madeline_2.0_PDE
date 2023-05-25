@@ -82,7 +82,7 @@ public:
 	Parser();
 	~Parser();
 	void display();                                     /// Prints out all datatables that have been read in
-
+	
     void readXML(const char* data);
 	void readDelimited(const char* data);
 	void readMadeline(const char* data);

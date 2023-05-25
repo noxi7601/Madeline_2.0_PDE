@@ -47,8 +47,6 @@
 //
 #include "limits.h"
 
-#include "main2.h"
-
 ///////////////////////////////////
 //
 // Private Methods:

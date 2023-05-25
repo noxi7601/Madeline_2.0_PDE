@@ -352,7 +352,7 @@ std::string PedigreeSet::draw(const DataTable *const pedigreeTable){
 	}
 	
 	std::cout << vt100::startBlue << "┗ End of      draw                      ┛" << vt100::stopColor << std::endl;
-
+	
 	return result;
 }
 

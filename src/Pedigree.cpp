@@ -2535,7 +2535,7 @@ std::string Pedigree::draw(const LabelSet* labelSet){
 	//
 	result = dc.show(drawingFileName.c_str());
 	std::cout << "Pedigree output file is “" << drawingFileName << "”" << std::endl; 
-
+	
 	return result;
 }
 
