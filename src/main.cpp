@@ -12,10 +12,12 @@
 #include "PedigreeSet.h"
 #include "Data.h"
 #include "DrawingMetrics.h"
-#include "DrawingCanvas.h"
 #include "Utility.h"
 #include "VT100.h"
 
+#ifndef ORIGINAL
+
+#include "DrawingCanvas.h"
 #include "main2.h"
 
 std::string build_real(const char* data) {
@@ -45,7 +47,10 @@ std::string build_real(const char* data) {
 	return result;
 }
 
+#endif
+
 int main( int argc, char *argv[] ){
+#ifdef ORIGINAL
 	
 	std::ifstream labelreader;
 	std::vector<std::string> showColumns; // vector containing field labels that need to be displayed on the pedigree
@@ -54,7 +59,7 @@ int main( int argc, char *argv[] ){
 	
 	// ABCDEFGH:
 	clp.addSwitch("--bw","-b","Print pedigrees in black and white");
-	clp.addSwitch("--collapsed","-k","\"Collapse\" multiple individuals into groups (requires \"Collapsed\" data column)");
+	clp.addSwitch("--collapsed","-k","“Collapse” multiple individuals into groups (requires “Collapsed” data column)");
 	clp.addSwitch("--color","-c","Print pedigrees in color");
 	clp.addSwitch("--custom-icon-colors","-C","Specify a comma- and semicolon-delimited list of custom icon shading color codes in HTML/CSS hex format.",1);
 	clp.addSwitch("--debug","-d","Print run-time progress messages");
@@ -79,9 +84,9 @@ int main( int argc, char *argv[] ){
 	clp.addUsage("madeline2 [option]... [file]...");
 	
 	// Print statement:
-	//std::cout << vt100::startBlue << "┌─────────────────────────────┐" << vt100::stopColor << std::endl;
-	//std::cout << vt100::startBlue << "│ Welcome to Madeline 2.0 PDE │" << vt100::stopColor << std::endl;
-	//std::cout << vt100::startBlue << "└─────────────────────────────┘" << vt100::stopColor << std::endl;
+	std::cout << vt100::startBlue << "┌─────────────────────────────┐" << vt100::stopColor << std::endl;
+	std::cout << vt100::startBlue << "│ Welcome to Madeline 2.0 PDE │" << vt100::stopColor << std::endl;
+	std::cout << vt100::startBlue << "└─────────────────────────────┘" << vt100::stopColor << std::endl;
 	
 	if(clp.parse(argc,argv)){
 		// No error, process the switches
@@ -380,11 +385,15 @@ int main( int argc, char *argv[] ){
 		
 		
 	}
+	
+	return 0;
+#else
+	std::cout << "Welcome to Madeline 2.0 PDE for DARWIN-MED" << std::endl;
 
 	DrawingCanvas::saveFlag = false;
 
 	build = build_real;
 	return start();
-	
+#endif
 }
 
