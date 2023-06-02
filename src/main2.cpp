@@ -12,7 +12,7 @@ std::string (*build)(const char* data) = NULL;
 
 LRESULT APIENTRY handler(HWND handle, UINT msg, WPARAM wParam, LPARAM lParam) {
     if (msg == WM_USER) {
-        OutputDebugString("!!!WM_USER");
+        return wParam;
     } else if (msg == WM_COPYDATA) {
     	PCOPYDATASTRUCT in = (PCOPYDATASTRUCT) lParam;
     	if (build != NULL) {

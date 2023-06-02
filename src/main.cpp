@@ -32,9 +32,9 @@ std::string build_real(const char* data) {
 	Parser parser;
 	parser.readDelimited(data);
 
-	for (int i = 0 ; i < parser.getNumberOfTables(); i++) {
+	for (int i = 0; i < parser.getNumberOfTables(); i++) {
 		DataTable* dataTable = parser.getTable(i);
-		if (dataTable->getTableType() == DataTable::PEDIGREE ) {
+		if (dataTable->getTableType() == DataTable::PEDIGREE) {
 			std::vector<std::string> columns;
 			dataTable->toggleColumnsForPedigree(columns);
 

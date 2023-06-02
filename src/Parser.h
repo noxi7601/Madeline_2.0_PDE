@@ -87,6 +87,7 @@ public:
 	void readDelimited(const char* data);
 	void readMadeline(const char* data);
 
+	void readData(const char* data);
 	void readFile(const std::string &filename);        /// Read in a file, unzip it, parse it, and put the contents into a datatable
 	//void readNetworkFile(const std::string &url);      /// Read in a file over the internet, unzip it, parse it, and put the contents into a datatable
 	

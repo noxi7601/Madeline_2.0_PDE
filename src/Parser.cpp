@@ -121,6 +121,19 @@ void Parser::readMadeline(const char* data) {
 	_readMadeline(stringify(const_cast<char*>(data), strlen(data)));
 }
 
+void Parser::readData(const char* data) {
+    _fileName = "";
+    _fileType = FileTypeClassifier::UTF8;
+    _fileTypeName = "UTF-8";
+
+	int blockCount = _determineNumberOfBlocks(std::string(data));
+	if (blockCount == 1) {
+		_readDelimited(data);
+	} else if (blockCount == 2) {
+		_readMadeline(data);
+	}
+}
+
 ///
 /// readFile: Reads a local file on disk
 ///
