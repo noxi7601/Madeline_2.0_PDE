@@ -96,8 +96,27 @@ int ArgumentData::doParse(const char* data) {
 
 // Arguments
 
-void Arguments::parse(const char* data, int dataSize) {
+Arguments::Arguments() {
+}
+
+Arguments::~Arguments() {
+	doClear();
+}
+
+void Arguments::doClear() {
+	for (auto i : this->items) {
+		delete i.second;
+	}
+
 	this->items.clear();
+}
+
+void Arguments::clear() {
+	doClear();
+}
+
+void Arguments::parse(const char* data, int dataSize) {
+	doClear();
 
 	int offset = 0;
 	while (offset < dataSize) {

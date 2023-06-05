@@ -78,9 +78,16 @@ private:
 };
 
 class Arguments {
+public:
+	Arguments();
+	~Arguments();
+
 private:
 	std::map<std::string, Argument*> items;
+private:
+	void doClear();
 public:
+	void clear();
 	void parse(const char* data, int dataSize);
 	Argument* get(const std::string name);
 };
