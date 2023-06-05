@@ -996,8 +996,12 @@ void Pedigree::_markConnectorIndividuals(Individual* individual,unsigned& loopNu
 						// set DT that has consanguinity
 						// This can be done using the _getPrimaryDescentTree below:
 						unsigned dtIndex = _getPrimaryDescentTreeIndex(dt1,individual,false);
-						_descentTrees[dtIndex]->setConsanguinity();
-						_dtsHaveConsanguinity=true;
+						if (dtIndex < _descentTrees.size()) {
+							_descentTrees[dtIndex]->setConsanguinity();
+							_dtsHaveConsanguinity=true;
+						} else {
+							std::cout << "Index is out of bounds" << std::endl;
+						}
 					}
 				}else{
 					//  To sort the descent trees based on complexity
@@ -1005,8 +1009,12 @@ void Pedigree::_markConnectorIndividuals(Individual* individual,unsigned& loopNu
 					// are there in each DT and with which DT they have maximum connections:
 					unsigned dtIndex = _getPrimaryDescentTreeIndex(dt1,individual,true);
 					unsigned spouseDTIndex = _getPrimaryDescentTreeIndex(dt2,(*spouseIt),false);
-					_descentTrees[dtIndex]->addExternalConnectorPair(individual,(*spouseIt));
-					_descentTrees[dtIndex]->incrementConnectionsWithDT(_descentTrees[spouseDTIndex]->getId());
+					if (dtIndex < _descentTrees.size()) {
+						_descentTrees[dtIndex]->addExternalConnectorPair(individual,(*spouseIt));
+						if (spouseDTIndex < _descentTrees.size()) {
+							_descentTrees[dtIndex]->incrementConnectionsWithDT(_descentTrees[spouseDTIndex]->getId());
+						}
+					}
 					
 				}
 			}
