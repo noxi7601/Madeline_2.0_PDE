@@ -20,27 +20,32 @@
 #include "DrawingCanvas.h"
 #include "main2.h"
 
-std::string build_real(const char* data) {
+std::string build_real(Arguments& arguments) {
 	std::string result;
 
-	std::ofstream file("input.data");
-	if (file.is_open()) {
-		file << data;
-		file.close();
-	}
+	Argument* argument = arguments.get("data");
+	if ((argument != NULL) && (argument->getKind() == ArgumentKind::String)) {
+		const char* data = ((ArgumentString*) argument)->getBody();
 
-	Parser parser;
-	parser.readDelimited(data);
+		std::ofstream file("input.data");
+		if (file.is_open()) {
+			file << data;
+			file.close();
+		}
 
-	for (int i = 0; i < parser.getNumberOfTables(); i++) {
-		DataTable* dataTable = parser.getTable(i);
-		if (dataTable->getTableType() == DataTable::PEDIGREE) {
-			std::vector<std::string> columns;
-			dataTable->toggleColumnsForPedigree(columns);
+		Parser parser;
+		parser.readDelimited(data);
 
-			PedigreeSet pedigreeSet;
-			pedigreeSet.addPedigreesFromDataTable(dataTable, i, "");
-			result = pedigreeSet.draw(dataTable);
+		for (int i = 0; i < parser.getNumberOfTables(); i++) {
+			DataTable* dataTable = parser.getTable(i);
+			if (dataTable->getTableType() == DataTable::PEDIGREE) {
+				std::vector<std::string> columns;
+				dataTable->toggleColumnsForPedigree(columns);
+
+				PedigreeSet pedigreeSet;
+				pedigreeSet.addPedigreesFromDataTable(dataTable, i, "");
+				result = pedigreeSet.draw(dataTable);
+			}
 		}
 	}
 
