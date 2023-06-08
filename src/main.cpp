@@ -23,18 +23,19 @@
 std::string build_real(Arguments& arguments) {
 	std::string result;
 
-	Argument* argument = arguments.get("data");
-	if ((argument != NULL) && (argument->getKind() == ArgumentKind::String)) {
-		const char* data = ((ArgumentString*) argument)->getBody();
-
+	String_ data = arguments.getString("data");
+	if (data != NULL) {
 		std::ofstream file("input.data");
 		if (file.is_open()) {
 			file << data;
 			file.close();
 		}
 
+		DrawingMetrics::setCollapsible(arguments.getInteger("collapsed", 0) != 0);
+
 		Parser parser;
 		parser.readDelimited(data);
+		//parser.readData(data);
 
 		for (int i = 0; i < parser.getNumberOfTables(); i++) {
 			DataTable* dataTable = parser.getTable(i);

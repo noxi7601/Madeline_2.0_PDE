@@ -11,6 +11,10 @@ enum class ArgumentKind {
 	Data = 4
 };
 
+typedef __int64 Integer;
+typedef double Float;
+typedef const char* String_;
+
 class Argument {
 public:
 	Argument(ArgumentKind kind);
@@ -34,9 +38,9 @@ protected:
 	int doParse(const char* data) override;
 
 private:
-	__int64 body;
+	Integer body;
 public:
-	__int64 getBody();
+	Integer getBody();
 };
 
 class ArgumentFloat : public Argument {
@@ -47,9 +51,9 @@ protected:
 	int doParse(const char* data) override;
 
 private:
-	double body;
+	Float body;
 public:
-	double getBody();
+	Float getBody();
 };
 
 class ArgumentString : public Argument {
@@ -60,9 +64,9 @@ protected:
 	int doParse(const char* data) override;
 
 private:
-	char* body;
+	String_ body;
 public:
-	const char* getBody();
+	String_ getBody();
 };
 
 class ArgumentData : public Argument {
@@ -74,7 +78,7 @@ protected:
 
 private:
 	int bodySize;
-	char* body;
+	const char* body;
 };
 
 class Arguments {
@@ -90,6 +94,10 @@ public:
 	void clear();
 	void parse(const char* data, int dataSize);
 	Argument* get(const std::string name);
+
+	Integer getInteger(const std::string name, Integer default_ = 0);
+	Float getFloat(const std::string name, Float default_ = 0);
+	String_ getString(const std::string name, String_ default_ = NULL);
 };
 
 int start();

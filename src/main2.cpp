@@ -38,12 +38,12 @@ ArgumentInteger::ArgumentInteger() : Argument(ArgumentKind::Integer) {
 }
 
 int ArgumentInteger::doParse(const char* data) {
-	this->body = *((__int64*) data);
+	this->body = *((Integer*) data);
 
 	return sizeof(this->body);
 }
 
-__int64 ArgumentInteger::getBody() {
+Integer ArgumentInteger::getBody() {
 	return this->body;
 }
 
@@ -54,12 +54,12 @@ ArgumentFloat::ArgumentFloat() : Argument(ArgumentKind::Float) {
 }
 
 int ArgumentFloat::doParse(const char* data) {
-	this->body = *((double*) data);
+	this->body = *((Float*) data);
 
 	return sizeof(this->body);
 }
 
-double ArgumentFloat::getBody() {
+Float ArgumentFloat::getBody() {
 	return this->body;
 }
 
@@ -71,12 +71,12 @@ ArgumentString::ArgumentString() : Argument(ArgumentKind::String) {
 
 int ArgumentString::doParse(const char* data) {
 	int bodySize = *((int*) data);
-	this->body = bodySize > 0 ? const_cast<char*>(data + sizeof(int)) : NULL;
+	this->body = bodySize > 0 ? data + sizeof(int) : NULL;
 
 	return sizeof(bodySize) + bodySize;
 }
 
-const char* ArgumentString::getBody() {
+String_ ArgumentString::getBody() {
 	return this->body;
 }
 
@@ -89,7 +89,7 @@ ArgumentData::ArgumentData() : Argument(ArgumentKind::Data) {
 
 int ArgumentData::doParse(const char* data) {
 	this->bodySize = *((int*) data);
-	this->body = bodySize > 0 ? const_cast<char*>(data + sizeof(int)) : NULL;
+	this->body = bodySize > 0 ? data + sizeof(int) : NULL;
 
 	return sizeof(this->bodySize) + this->bodySize;
 }
@@ -163,6 +163,21 @@ Argument* Arguments::get(const std::string name) {
 	return result != this->items.end() ? result->second : NULL;
 }
 
+Integer Arguments::getInteger(const std::string name, Integer default_) {
+	ArgumentInteger* argument = dynamic_cast<ArgumentInteger*>(get(name));
+	return argument != NULL ? argument->getBody() : default_;
+}
+
+Float Arguments::getFloat(const std::string name, Float default_) {
+	ArgumentFloat* argument = dynamic_cast<ArgumentFloat*>(get(name));
+	return argument != NULL ? argument->getBody() : default_;
+}
+
+String_ Arguments::getString(const std::string name, String_ default_) {
+	ArgumentString* argument = dynamic_cast<ArgumentString*>(get(name));
+	return argument != NULL ? argument->getBody() : default_;
+}
+
 // Unit
 
 LRESULT APIENTRY handler(HWND handle, UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -180,6 +195,8 @@ LRESULT APIENTRY handler(HWND handle, UINT msg, WPARAM wParam, LPARAM lParam) {
     		out.cbData = result.length() + 1;
     		out.lpData = (void*) result.c_str();
     		SendMessage((HWND) wParam, WM_COPYDATA, (WPARAM) handle, (LPARAM) &out);
+
+    		return in->dwData;
     	}
     }
 
