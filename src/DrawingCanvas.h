@@ -137,7 +137,7 @@ public:
 	void drawVerticalLine(double x,double y1,double y2,const std::string & className=std::string(""), const std::string & id=std::string(""));
 	void drawVerticalDoubleLine(double x,double y1,double y2,char startMiter='-',char endMiter='-');
 	void drawPolyline(const std::string points,const std::string& id=std::string(""),const std::string& myclass=std::string(""));
-	void drawText(double x,double y,std::string text,std::string  myclass="");
+	void drawText(double x,double y,std::string text,std::string  myclass="",std::string id="");
 	void drawIconText(double x,double y,std::string text,std::string  myclass="");
 	void drawRectangle(double x,double y,double width,double height);
 	

@@ -885,10 +885,10 @@ void DrawingCanvas::drawVerticalDoubleLine(double x,double y1,double y2,char sta
 //
 // drawText:
 //
-void DrawingCanvas::drawText(double x,double y,std::string text,std::string cssClass){
+void DrawingCanvas::drawText(double x,double y,std::string text,std::string cssClass,std::string id){
 	
-	if(!_layerFlag) _svg.drawText(_body,x,y,text,cssClass);
-	else            _svg.drawText(_layer,x,y,text,cssClass);
+	if(!_layerFlag) _svg.drawText(_body,x,y,text,cssClass,id);
+	else            _svg.drawText(_layer,x,y,text,cssClass,id);
 	
 }
 
@@ -1288,7 +1288,8 @@ void DrawingCanvas::drawIndividual(Individual* pIndividual,double x,double y,boo
 		    DrawingMetrics::getYMaximum()    +
 		    DrawingMetrics::getLineHeight();
 		
-		drawText(x,y, _labelManager.fitStringToLabelWidth(pIndividual->getId().get()) );
+		std::string id = pIndividual->getId().get();
+		drawText(x,y, _labelManager.fitStringToLabelWidth(id), "", id);
 		
 	}
 	
@@ -1327,7 +1328,8 @@ void DrawingCanvas::drawLabelSet(Individual* pIndividual){
 		// Print just the ID:
 		// drawText(x,y, pIndividual->getId().get());
 		//
-		drawText(x,y, _labelManager.fitStringToLabelWidth(pIndividual->getId().get()) );
+		std::string id = pIndividual->getId().get();
+		drawText(x,y, _labelManager.fitStringToLabelWidth(id), "", id);
 		return;
 	}
 	
