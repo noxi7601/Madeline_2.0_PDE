@@ -394,7 +394,7 @@ int main( int argc, char *argv[] ){
 	
 	return 0;
 #else
-	std::cout << "Welcome to Madeline 2.0 PDE for DARWIN-MED" << std::endl;
+	std::cout << "Welcome to Madeline 2.0 PDE for DARWIN-MED+" << std::endl;
 
 	DrawingCanvas::saveFlag = false;
 
