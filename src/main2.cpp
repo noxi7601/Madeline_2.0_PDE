@@ -1,6 +1,8 @@
 #include <string.h>
 
 #include <string>
+#include <algorithm>
+#include <list>
 #include <sstream>
 #include <fstream>
 #include <iostream>
@@ -9,8 +11,14 @@
 
 #include "main2.h"
 
+#define MM_PING (WM_USER + 1000)
+#define MM_OPEN (WM_USER + 1001)
+#define MM_CLOSE (WM_USER + 1002)
+
 LPCWSTR className = L"e9ec3947-4209-4eb4-9f91-36ef7ffbe183";
+
 HWND handle = 0;
+std::list<HWND> handles;
 
 std::string (*build)(Arguments& arguments) = NULL;
 
@@ -180,14 +188,56 @@ String_ Arguments::getString(const std::string name, String_ default_) {
 
 // Unit
 
+void check() {
+	if (handles.size() > 0) {
+		for (auto i = handles.begin(); i != handles.end(); ) {
+			HWND handle = *i;
+			i++;
+
+			if (SendMessage(handle, MM_PING, 2023, 0) != 2023) {
+				handles.remove(handle);
+
+				std::cout << "remove: " << handle << std::endl;
+			}
+		}
+
+		if (handles.size() == 0) {
+			PostQuitMessage(0);
+		}
+	}
+}
+
+void open(HWND handle) {
+	handles.push_back(handle);
+
+	std::cout << "open: " << handle << std::endl;
+}
+
+void close(HWND handle) {
+	std::cout << "close: " << handle << std::endl;
+
+	auto i = std::find(handles.begin(), handles.end(), handle);
+	if (i != handles.end()) {
+		handles.remove(handle);
+	}
+
+	if (handles.size() == 0) {
+		PostQuitMessage(0);
+	}
+}
+
 LRESULT APIENTRY handler(HWND handle, UINT msg, WPARAM wParam, LPARAM lParam) {
     if (msg == WM_USER) {
         return wParam;
+    } else if (msg == WM_TIMER) {
+    	if (wParam == 1000) {
+    		check();
+    	}
     } else if (msg == WM_COPYDATA) {
     	PCOPYDATASTRUCT in = (PCOPYDATASTRUCT) lParam;
     	if (build != NULL) {
     		Arguments arguments;
-    		arguments.parse((const char*) in->lpData, in->cbData);
+    		arguments.parse(static_cast<char*>(in->lpData), in->cbData);
     		std::string result = build(arguments);
 
     		COPYDATASTRUCT out;
@@ -198,27 +248,36 @@ LRESULT APIENTRY handler(HWND handle, UINT msg, WPARAM wParam, LPARAM lParam) {
 
     		return in->dwData;
     	}
+    } else if (msg == MM_PING) {
+    	return wParam;
+    } else if (msg == MM_OPEN) {
+    	open(reinterpret_cast<HWND>(wParam));
+    } else if (msg == MM_CLOSE) {
+    	close(reinterpret_cast<HWND>(wParam));
     }
 
     return DefWindowProc(handle, msg, wParam, lParam);
 }
 
+void printWarning(std::string message) {
+}
+
 int start() {
     HINSTANCE hInstance = GetModuleHandle(NULL);
 
-    WNDCLASSW wndClass;
-    wndClass.style = 0;
-    wndClass.lpfnWndProc = &handler;
-    wndClass.cbClsExtra = 0;
-    wndClass.cbWndExtra = 0;
-    wndClass.hInstance = hInstance;
-    wndClass.hIcon = 0;
-    wndClass.hCursor = 0;
-    wndClass.hbrBackground = 0;
-    wndClass.lpszMenuName = NULL;
-    wndClass.lpszClassName = className;
+    WNDCLASSW wc;
+    wc.style = 0;
+    wc.lpfnWndProc = &handler;
+    wc.cbClsExtra = 0;
+    wc.cbWndExtra = 0;
+    wc.hInstance = hInstance;
+    wc.hIcon = 0;
+    wc.hCursor = 0;
+    wc.hbrBackground = 0;
+    wc.lpszMenuName = NULL;
+    wc.lpszClassName = className;
 
-    if (!RegisterClassW(&wndClass)) {
+    if (!RegisterClassW(&wc)) {
         return -1;
     }
 
@@ -235,6 +294,8 @@ int start() {
     if (handle == NULL) {
         return -2;
     }
+
+    SetTimer(handle, 1000, 100, NULL);
 
     MSG msg;
     while (GetMessageW(&msg, 0, 0, 0)) {

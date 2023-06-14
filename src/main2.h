@@ -100,8 +100,9 @@ public:
 	String_ getString(const std::string name, String_ default_ = NULL);
 };
 
-int start();
-
 extern std::string (*build)(Arguments& arguments);
+
+extern void printWarning(std::string message);
+extern int start();
 
 #endif
