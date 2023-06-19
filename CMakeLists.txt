@@ -32,8 +32,8 @@ if(__WINDOWS_GNU)
 endif(__WINDOWS_GNU)
 
 set(CMAKE_CXX_FLAGS "-static")
-set(CMAKE_CXX_FLAGS_DEBUG "-static -O0 -g")
-set(CMAKE_CXX_FLAGS_RELEASE "-static -O2")
+set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -D__DEBUG__")
+set(CMAKE_CXX_FLAGS_RELEASE "-O2")
 
 add_definitions(-DLIBXML_STATIC)
 

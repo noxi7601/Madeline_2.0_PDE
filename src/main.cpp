@@ -25,11 +25,13 @@ std::string build_real(Arguments& arguments) {
 
 	String_ data = arguments.getString("data");
 	if (data != NULL) {
-		std::ofstream file("input.data");
+#ifdef __DEBUG__
+		std::ofstream file("input.data", std::ios::binary);
 		if (file.is_open()) {
 			file << data;
 			file.close();
 		}
+#endif
 
 		DrawingMetrics::setCollapsible(arguments.getInteger("collapsed", 0) != 0);
 
@@ -48,6 +50,16 @@ std::string build_real(Arguments& arguments) {
 				result = pedigreeSet.draw(dataTable);
 			}
 		}
+
+#ifdef __DEBUG__
+		{
+			std::ofstream file("output.svg", std::ios::binary);
+			if (file.is_open()) {
+				file << result;
+				file.close();
+			}
+		}
+#endif
 	}
 
 	return result;
