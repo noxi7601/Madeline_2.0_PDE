@@ -80,7 +80,7 @@ void SVG::drawText(std::ostringstream& os,double x,double y,std::string text,con
 	
 	os << "  <text x=\"" << x << "\" y=\"" << y << "\" text-anchor=\"middle\" ";
 	if(cssClass!="") os << " class=\"" << cssClass << "\" ";
-	if(id!="") os << " id=\"" << id << "_text\"";
+	if(id!="") os << " id=\"" << id << "\" ";
 	os << ">" << text << "</text>\n";
 	
 }

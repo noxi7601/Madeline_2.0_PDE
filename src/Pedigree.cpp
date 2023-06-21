@@ -2429,12 +2429,12 @@ std::string Pedigree::draw(const LabelSet* labelSet){
 		if(startX < dc.getWidth()) startX = dc.getWidth()/2;
 		else startX -= dc.getWidth()/2;
 		if(_descentTrees[0]->hasConsanguinity()) classicalOrdering = true;
-		dc.drawText(startX+horizontalInterval,startY-20,_id,"header");
+		dc.drawText(startX+horizontalInterval,startY-20,_id,"header", "header.text");
 	}else{
 		// get the LW of the first ordered descent tree
 		startX = _descentTrees[0]->getLeftWidth()* horizontalInterval;
 		classicalOrdering = true;
-		dc.drawText(dc.getWidth()/2,startY-20,_id,"header");
+		dc.drawText(dc.getWidth()/2,startY-20,_id,"header", "header.text");
 	}
 	
 	
