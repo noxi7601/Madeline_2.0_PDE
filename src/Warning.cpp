@@ -32,6 +32,8 @@
 #include <string.h>
 #include "VT100.h"
 
+#include "main2.h"
+
 bool Warning::_suppressWarnings=false;
 const char *Warning::_warningSalutation="Warning";
 
@@ -84,6 +86,8 @@ void Warning::print(void){
 	if(_truncated){
 		std::cerr << gettext("(Message has been truncated)") << std::endl;
 	}
+
+	printWarning(_message);
 }
 
 

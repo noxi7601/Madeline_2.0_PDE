@@ -192,9 +192,15 @@ void check() {
 	if (handles.size() > 0) {
 		for (auto i = handles.begin(); i != handles.end(); ) {
 			HWND handle = *i;
+			DWORD_PTR o = 0;
 			i++;
 
-			if (SendMessage(handle, MM_PING, 2023, 0) != 2023) {
+#ifdef __DEBUG__
+			o = SendMessage(handle, MM_PING, 2023, 0);
+#else
+			SendMessageTimeoutW(handle, MM_PING, 2023, 0, SMTO_NORMAL, 3000, &o);
+#endif
+			if (o != 2023) {
 				handles.remove(handle);
 
 				std::cout << "remove: " << handle << std::endl;
@@ -241,9 +247,9 @@ LRESULT APIENTRY handler(HWND handle, UINT msg, WPARAM wParam, LPARAM lParam) {
     		std::string result = build(arguments);
 
     		COPYDATASTRUCT out;
-    		out.dwData = 0;
+    		out.dwData = in->dwData;
     		out.cbData = result.length() + 1;
-    		out.lpData = (void*) result.c_str();
+    		out.lpData = (void*)(result.c_str());
     		SendMessage((HWND) wParam, WM_COPYDATA, (WPARAM) handle, (LPARAM) &out);
 
     		return in->dwData;
