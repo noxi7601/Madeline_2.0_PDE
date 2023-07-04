@@ -83,6 +83,9 @@ inline void Individual::_init(void){
 	
 	_leftWidth = _rightWidth = 1;
 	_totalWidth= _leftWidth + _rightWidth;
+
+	_x = 0;
+	_y = 0;
 	
 	_leftSideOfLoop                = 0;
 	_rightSideOfLoop               = 0;
