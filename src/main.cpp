@@ -35,6 +35,18 @@ std::string build_real(Arguments& arguments) {
 		})();
 #endif
 
+		std::vector<std::string> columns;
+
+		String_ font = arguments.getString("font");
+		if (font != NULL) {
+			DrawingMetrics::setFontFamily(font);
+		}
+
+		String_ labels = arguments.getString("labels");
+		if (labels != NULL) {
+			columns = utility::split(labels);
+		}
+
 		DrawingMetrics::setCollapsible(arguments.getInteger("collapsed", 0) != 0);
 
 		Parser parser;
@@ -44,7 +56,6 @@ std::string build_real(Arguments& arguments) {
 		for (int i = 0; i < parser.getNumberOfTables(); i++) {
 			DataTable* dataTable = parser.getTable(i);
 			if (dataTable->getTableType() == DataTable::PEDIGREE) {
-				std::vector<std::string> columns;
 				dataTable->toggleColumnsForPedigree(columns);
 
 				PedigreeSet pedigreeSet;

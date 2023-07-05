@@ -104,6 +104,7 @@ void SVG::startGroup(std::ostringstream& os,const std::string& cssClass,const st
 	
 	os << "  <g"; 
 	if(cssClass!=std::string("")) os << " class=\"" << cssClass << "\"";
+	if(id!=std::string("")) os << " id=\"" << id << "\"";
 	os << ">\n";
 	
 }

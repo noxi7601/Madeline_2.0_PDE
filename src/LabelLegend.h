@@ -64,12 +64,12 @@ public:
 		double ystt = y; 
 		
 		// Wrap labels in a group:
-		psvg->startGroup(os,"legend");
+		psvg->startGroup(os,"legend", "labels");
 		psvg->drawRectangle(os,xstt,ystt,_width-2*labelMargin,_height,"keyBox");
 		ystt+= lineHeight;
 		xstt+=DrawingMetrics::getHorizontalInterval() - labelMargin;
 		for(unsigned i=0;i<labels.size();i++){
-			psvg->drawText(os,xstt,ystt, plm->fitStringToLabelWidth( labels[i] ) );
+			psvg->drawText(os,xstt,ystt, plm->fitStringToLabelWidth( labels[i] ), "", labels[i] + ".text" );
 			ystt+=lineHeight;
 		}
 		psvg->endGroup(os);

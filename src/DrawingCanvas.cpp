@@ -1039,7 +1039,8 @@ void DrawingCanvas::drawIndividual(Individual* pIndividual,double x,double y,boo
 			             DrawingMetrics::getLabelMargin() + 
 			             DrawingMetrics::getYMaximum()    +
 			             DrawingMetrics::getLineHeight();
-			drawText(x,adjustedY, _labelManager.fitStringToLabelWidth(pIndividual->getId().get()) );
+			std::string id = pIndividual->getId().get();
+			drawText(x,adjustedY, _labelManager.fitStringToLabelWidth(id), "", id + ".text" );
 			return;
 			
 		}
@@ -1353,7 +1354,7 @@ void DrawingCanvas::drawLabelSet(Individual* pIndividual){
 	std::vector<UTF8String> labels = _labelSet->getLabelSet(pIndividual);
 	for(unsigned i=0;i<labels.size();i++){
 		
-		drawText(x,y, _labelManager.fitStringToLabelWidth( labels[i] ) );
+		drawText(x,y, _labelManager.fitStringToLabelWidth( labels[i] ), "",  labels[i] + ".text");
 		y+=lineHeight;
 	}
 	
