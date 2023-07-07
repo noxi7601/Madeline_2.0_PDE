@@ -273,6 +273,8 @@ void printWarning(std::string message) {
 }
 
 int start() {
+    SetErrorMode(SEM_NOGPFAULTERRORBO);
+
     HINSTANCE hInstance = GetModuleHandle(NULL);
 
     WNDCLASSW wc;
