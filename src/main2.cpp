@@ -244,15 +244,19 @@ LRESULT APIENTRY handler(HWND handle, UINT msg, WPARAM wParam, LPARAM lParam) {
         if (build != NULL) {
             Arguments arguments;
             arguments.parse(static_cast<char*>(in->lpData), in->cbData);
-            std::string result = build(arguments);
+            try {
+                std::string result = build(arguments);
 
-            COPYDATASTRUCT out;
-            out.dwData = in->dwData;
-            out.cbData = result.length() + 1;
-            out.lpData = (void*)(result.c_str());
-            SendMessage((HWND) wParam, WM_COPYDATA, (WPARAM) handle, (LPARAM) &out);
+                COPYDATASTRUCT out;
+                out.dwData = in->dwData;
+                out.cbData = result.length() + 1;
+                out.lpData = (void*)(result.c_str());
+                SendMessage((HWND) wParam, WM_COPYDATA, (WPARAM) handle, (LPARAM) &out);
 
-            return in->dwData;
+                return in->dwData;
+            } catch (...) {
+                exit(-1);
+            }
         }
     } else if (msg == MM_PING) {
         return wParam;
