@@ -273,7 +273,7 @@ void printWarning(std::string message) {
 }
 
 int start() {
-    SetErrorMode(SEM_NOGPFAULTERRORBO);
+    SetErrorMode(SEM_NOGPFAULTERRORBOX);
 
     HINSTANCE hInstance = GetModuleHandle(NULL);
 
