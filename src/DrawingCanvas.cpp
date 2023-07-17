@@ -31,6 +31,7 @@
 
 #include "DrawingCanvas.h"
 #include <fstream>
+#include <cstdio>
 
 //
 // Required for math definitions like TWO_PI, etc:
@@ -1308,6 +1309,8 @@ void DrawingCanvas::drawIndividual(Individual* pIndividual,double x,double y,boo
 //
 void DrawingCanvas::drawLabelSet(Individual* pIndividual){
 	
+	std::string id = pIndividual->getId().get();
+
 	double x = pIndividual->getX();
 	//
 	// Set Y start position as Y + radius + margin + yMaximum + lineHeight:
@@ -1329,7 +1332,6 @@ void DrawingCanvas::drawLabelSet(Individual* pIndividual){
 		// Print just the ID:
 		// drawText(x,y, pIndividual->getId().get());
 		//
-		std::string id = pIndividual->getId().get();
 		drawText(x,y, _labelManager.fitStringToLabelWidth(id), "", id + ".text");
 		return;
 	}
@@ -1353,8 +1355,9 @@ void DrawingCanvas::drawLabelSet(Individual* pIndividual){
 	//
 	std::vector<UTF8String> labels = _labelSet->getLabelSet(pIndividual);
 	for(unsigned i=0;i<labels.size();i++){
-		
-		drawText(x,y, _labelManager.fitStringToLabelWidth( labels[i] ), "",  labels[i] + ".text");
+		char label[100];
+		std::snprintf(label, sizeof(label), "%s.%d.text", id.c_str(), i);
+		drawText(x,y, _labelManager.fitStringToLabelWidth( labels[i] ), "",  label);
 		y+=lineHeight;
 	}
 	

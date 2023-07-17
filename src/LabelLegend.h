@@ -23,6 +23,8 @@
 #ifndef LABELLEGEND_INCLUDED
 #define LABELLEGEND_INCLUDED
 
+#include <cstdio>
+
 #include "DrawingMetrics.h"
 #include "LabelSet.h"
 #include "DrawingLabelManager.h"
@@ -69,7 +71,9 @@ public:
 		ystt+= lineHeight;
 		xstt+=DrawingMetrics::getHorizontalInterval() - labelMargin;
 		for(unsigned i=0;i<labels.size();i++){
-			psvg->drawText(os,xstt,ystt, plm->fitStringToLabelWidth( labels[i] ), "", labels[i] + ".text" );
+			char label[100];
+			std::snprintf(label, sizeof(label), "label.%d.text", i);
+			psvg->drawText(os,xstt,ystt, plm->fitStringToLabelWidth( labels[i] ), "", label);
 			ystt+=lineHeight;
 		}
 		psvg->endGroup(os);
