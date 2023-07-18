@@ -717,9 +717,9 @@ void Pedigree::_assignMultipleDescentTreeJoinerSpouses(){
 				// DEBUG: 
 				//std::cout << (*it)->getId() << " and " << (*spi)->getId() << " have " << vIntersect.size() << " elements in common" << std::endl;
 				//
-				//if(vIntersect.size()==0){
-				//	(*it)->setMultipleDescentTreeJoinerSpouse(true);
-				//}
+				if(vIntersect.size()==0){
+					(*it)->setMultipleDescentTreeJoinerSpouse(true);
+				}
 			}
 		}
 	}
