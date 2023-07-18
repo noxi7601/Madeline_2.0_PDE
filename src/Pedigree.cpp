@@ -452,9 +452,17 @@ void Pedigree::_markLeftExternalConnectionFlags(Individual* individual,unsigned 
 	
 	// get parents of the Individual
 	Individual* father = individual->getFather();
+	if (father == NULL) {
+		return;
+	}
+
+	Individual* mother = individual->getMother();
+	if (mother == NULL) {
+		return;
+	}
+
 	if(father->isOriginalFounder()) {
 		father->setLeftSideOfExternalConnection(connectionNumber);
-		Individual* mother = individual->getMother();
 		mother->setLeftSideOfExternalConnection(connectionNumber);
 		return;
 	}
@@ -462,17 +470,15 @@ void Pedigree::_markLeftExternalConnectionFlags(Individual* individual,unsigned 
 		// assign the connectionNumber to the Father
 		father->setLeftSideOfExternalConnection(connectionNumber);
 		if(father->getNumberOfSpouses() > 1){
-			Individual* mother = individual->getMother();
 			mother->setLeftSideOfExternalConnection(connectionNumber);
 		}
 		// recurse up the tree
 		_markLeftExternalConnectionFlags(father,connectionNumber);
 	}
-	Individual* mother = individual->getMother();
+
 	if(!mother->isOrdinaryFounder()){
 		mother->setLeftSideOfExternalConnection(connectionNumber);
 		if(mother->getNumberOfSpouses() > 1){
-			Individual* father = individual->getFather();
 			father->setLeftSideOfExternalConnection(connectionNumber);
 		}
 		_markLeftExternalConnectionFlags(mother,connectionNumber);
@@ -488,11 +494,20 @@ void Pedigree::_markRightExternalConnectionFlags(Individual* individual,unsigned
 	
 	// Assign the connectionNumber to the Individual
 	individual->setRightSideOfExternalConnection(connectionNumber);
+
 	// get parents of the Individual
 	Individual* father = individual->getFather();
+	if (father == NULL) {
+		return;
+	}
+
+	Individual* mother = individual->getMother();
+	if (mother == NULL) {
+		return;
+	}
+
 	if(father->isOriginalFounder()) {
 		father->setRightSideOfExternalConnection(connectionNumber);
-		Individual* mother = individual->getMother();
 		mother->setRightSideOfExternalConnection(connectionNumber);
 		return;
 	}
@@ -500,17 +515,15 @@ void Pedigree::_markRightExternalConnectionFlags(Individual* individual,unsigned
 		// Assign the connectionNumber to the Father
 		father->setRightSideOfExternalConnection(connectionNumber);
 		if(father->getNumberOfSpouses() > 1){
-			Individual* mother = individual->getMother();
 			mother->setRightSideOfExternalConnection(connectionNumber);
 		}
 		// Recurse up the tree
 		_markRightExternalConnectionFlags(father,connectionNumber);
 	}
-	Individual* mother = individual->getMother();
+
 	if(!mother->isOrdinaryFounder()){
 		mother->setRightSideOfExternalConnection(connectionNumber);
 		if(mother->getNumberOfSpouses() > 1){
-			Individual* father = individual->getFather();
 			father->setRightSideOfExternalConnection(connectionNumber);
 		}
 		_markRightExternalConnectionFlags(mother,connectionNumber);
@@ -704,9 +717,9 @@ void Pedigree::_assignMultipleDescentTreeJoinerSpouses(){
 				// DEBUG: 
 				//std::cout << (*it)->getId() << " and " << (*spi)->getId() << " have " << vIntersect.size() << " elements in common" << std::endl;
 				//
-				if(vIntersect.size()==0){
-					(*it)->setMultipleDescentTreeJoinerSpouse(true);
-				}
+				//if(vIntersect.size()==0){
+				//	(*it)->setMultipleDescentTreeJoinerSpouse(true);
+				//}
 			}
 		}
 	}

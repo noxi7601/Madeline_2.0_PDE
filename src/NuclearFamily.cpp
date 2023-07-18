@@ -904,7 +904,7 @@ void NuclearFamily::draw(Individual* startIndividual,DrawingCanvas& dc,double st
 		// he needs to be drawn with his pedigree rather than his spouse which has 
 		// multipls NFs
 		//
-		if((isConsanguinous() || hasExternalConnection()) && startIndividual->getGender().getEnum() == Gender::MALE && _mother->hasBeenDrawn() && !children[0]->hasBeenDrawn()){
+		if((isConsanguinous() || hasExternalConnection()) && startIndividual->getGender().getEnum() == Gender::MALE && _mother->hasBeenDrawn() && !children[0]->hasBeenDrawn() && _mother->getNumberOfNuclearFamilies() > 1){
 			// Don't draw him here ...
 		}else{
 			dc.drawIndividual(startIndividual,currentX,currentY,dashedOriginalFounder);
