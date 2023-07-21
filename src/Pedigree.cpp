@@ -1284,6 +1284,7 @@ void Pedigree::_sortAndCalculateDescentTreeWidth(){
 	for(unsigned cnt=0;cnt < _descentTrees.size();cnt++){
 		
 		Individual* startIndividual = _descentTrees[cnt]->getStartIndividual();
+		startIndividual->setDescentTreeIndex(cnt);
 		_calculateWidth(startIndividual,classicalOrdering,cnt);
 		
 		// Check if there exists any Founding Group member who has > 1 NF 

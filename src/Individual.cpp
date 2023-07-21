@@ -108,6 +108,7 @@ inline void Individual::_init(void){
 	_father = 0; 
 	_mother = 0;
 	
+	_descentTreeIndex = -1;
 }
 
 //
@@ -793,4 +794,17 @@ void Individual::addSpouse(Individual* spouse){
 	}
 }
 
+unsigned Individual::getDescentTreeIndex() {
+	return _descentTreeIndex;
+}
 
+void Individual::setDescentTreeIndex(unsigned value) {
+	_descentTreeIndex = value;
+
+	auto f = _nuclearFamilies.begin();
+	while (f != _nuclearFamilies.end()) {
+		(*f)->setDescentTreeIndex(value);
+
+		f++;
+	}
+}

@@ -50,6 +50,8 @@ NuclearFamily::NuclearFamily(Individual* mother,Individual* father){
 	_father=father; 
 	_twinGroupCount=0; 
 	_leftConnectionShiftFlag = false;
+
+	_descentTreeIndex = -1;
 }
 
 
@@ -829,14 +831,18 @@ void NuclearFamily::calculateWidth(bool classicalOrder){
 	// left hanging at less than the total NF width:
 	//
 	if( _father->getTotalWidth() < _width.getTotal()){
-		_father->setLeftWidth( _width.getLeft());
-		_father->setTotalWidth( _width.getTotal());
-		_father->setRightWidth( _width.getRight());
+		if (_father->getDescentTreeIndex() == _descentTreeIndex) {
+			_father->setLeftWidth( _width.getLeft());
+			_father->setTotalWidth( _width.getTotal());
+			_father->setRightWidth( _width.getRight());
+		}
 	}
 	if( _mother->getTotalWidth() < _width.getTotal()){
-		_mother->setLeftWidth( _width.getLeft());
-		_mother->setTotalWidth( _width.getTotal());
-		_mother->setRightWidth( _width.getRight());
+		if (_mother->getDescentTreeIndex() == _descentTreeIndex) {
+			_mother->setLeftWidth( _width.getLeft());
+			_mother->setTotalWidth( _width.getTotal());
+			_mother->setRightWidth( _width.getRight());
+		}
 	}
 	
 	// DEBUG:
@@ -1730,6 +1736,21 @@ void NuclearFamily::drawVerticalDropToIndividual(DrawingCanvas &dc,Individual *p
 	dc.drawVerticalLine( x , y , yEnd , std::string( pChild->isIndividualAdoptedIn()?"dashed":"solid" ));
 	return;
 	
+}
+
+unsigned NuclearFamily::getDescentTreeIndex() {
+	return _descentTreeIndex;
+}
+
+void NuclearFamily::setDescentTreeIndex(unsigned value) {
+	_descentTreeIndex = value;
+
+	auto c = _sortedChildren.begin();
+	while (c != _sortedChildren.end()) {
+		(*c)->setDescentTreeIndex(value);
+
+		c++;
+	}
 }
 
 //

@@ -194,6 +194,8 @@ private:
 	
 	unsigned _collapsedCount;
 	
+	unsigned _descentTreeIndex;
+
 public:
 	
 	//
@@ -426,6 +428,9 @@ public:
 	
 	void setMultipleSpouseConnectorsDrawn(void){ _multipleSpouseConnectorsDrawn=true; }
 	bool getMultipleSpouseConnectorsDrawn(void){ return _multipleSpouseConnectorsDrawn; }
+
+	unsigned getDescentTreeIndex();
+	void setDescentTreeIndex(unsigned value);
 };
 
 #endif

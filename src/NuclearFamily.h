@@ -45,6 +45,8 @@ private:
 	unsigned _twinGroupCount; // # of Twin groups in the NF
 	std::vector<Individual*> _childrenInClassicalOrder; // empty if there is no consanguinity or external connections
 	std::vector<Individual*> _sortedChildren; // the current default is order by id
+
+	unsigned _descentTreeIndex;
 	
 	void _rearrangeIndividualsBasedOnTwins(const bool consanguinousLoop,std::deque<Individual*>& initial,std::deque<Individual*>& leftLoopIndividuals,std::deque<Individual*>& rightLoopIndividuals);
 	void _orderTwins(Individual* pivotIndividual,std::deque<Individual*>& srcLoopIndividuals, std::deque<Individual*>& dstLoopIndividuals,const std::deque<unsigned>& indices,bool front=false );
@@ -55,7 +57,7 @@ public:
 	//
 	// Constructors:
 	//
-	NuclearFamily() { _twinGroupCount=0; _leftConnectionShiftFlag=false; }
+	NuclearFamily() { _twinGroupCount=0; _leftConnectionShiftFlag=false; _descentTreeIndex = -1; }
 	NuclearFamily(Individual* mother,Individual* father);
 	//
 	// Methods:
@@ -112,6 +114,9 @@ public:
 	
 	unsigned getTwinGroupCount(void) { return _twinGroupCount; }
 	
+	unsigned getDescentTreeIndex();
+	void setDescentTreeIndex(unsigned value);
+
 	// Debug:
 	void display();
 	
