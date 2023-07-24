@@ -704,7 +704,11 @@ void NuclearFamily::calculateWidth(bool classicalOrder){
 					rightWidth = children[0]->getRightWidth();
 					// For cases with a single child and rightWidth 0 
 					// you need to add some width on the right for the parents
-					if(rightWidth == 0){ rightWidth = 2; totalWidth += 2; }
+					if(rightWidth == 0){
+						children[0]->setRightWidth(2);
+						rightWidth = 2;
+						totalWidth += 2;
+					}
 					
 				}
 			}

@@ -761,7 +761,7 @@ unsigned Pedigree::_getPrimaryDescentTreeIndex(std::set<unsigned>& dt,Individual
 	for(dtIndex=0;dtIndex<_descentTrees.size();dtIndex++){
 		if(_descentTrees[dtIndex]->getId() == (*sit)){
 			if(increment)
-			_descentTrees[dtIndex]->incrementNumberOfExternalConnections();
+				_descentTrees[dtIndex]->incrementNumberOfExternalConnections();
 			break;
 		}
 	}
@@ -806,11 +806,12 @@ void Pedigree::_determineConnectorIndividuals(){
 	
 	// Determine external and internal connectors:
 	unsigned loopNumber = 0;
-	if(_descentTrees.size() > 1)
+	if(_descentTrees.size() > 1){
 		// Assign descent trees to individuals only if there is more than one descent tree
 		// If there is only one descent tree the connectors can only be consanguinous.
 		_assignDescentTrees();
 		_assignMultipleDescentTreeJoinerSpouses();
+	}
 	unsigned cnt, cnt1;
 	for(unsigned i=0;i<_descentTrees.size();i++){
 		// Get number of individuals in the founding group
@@ -1280,8 +1281,8 @@ void Pedigree::_sortAndCalculateDescentTreeWidth(){
 		}
 	}
 
-	for (unsigned i = 0; i < _descentTrees.size(); i++) {
-		_descentTrees[i]->getStartIndividual()->setDescentTreeIndex(i);
+	for(unsigned cnt=0;cnt < _descentTrees.size();cnt++){
+		_descentTrees[cnt]->getStartIndividual()->setDescentTreeIndex(cnt);
 	}
 	
 	// Calculate width:
