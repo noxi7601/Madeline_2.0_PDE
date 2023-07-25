@@ -958,7 +958,7 @@ void Pedigree::_reorderDescentTreesBasedOnExternalConnections(){
 void Pedigree::_markConnectorIndividuals(Individual* individual,unsigned& loopNumber){
 	
 	// Mark consanguinous individuals and individuals that have external connections:
-	if(individual->isOrdinaryFounder() == true || individual->isOriginalFounder() == true){ 
+	if(individual->isOrdinaryFounder() == true || individual->isOriginalFounder() == true){
 		return;
 	}
 	
@@ -2317,6 +2317,24 @@ void Pedigree::determineFoundingGroups(){
 				if((*spi)->isOrdinaryFounder()){
 					if(!(*iit)->isOriginalFounder()) (*iit)->setOriginalFounder(true);
 					if(!(*spi)->isOriginalFounder()) (*spi)->setOriginalFounder(true);
+					// DEBUG std::cout << ">>> Setting " << (*iit)->getId() << " and " << (*spi)->getId() << " as original founders." << std::endl;
+				}
+			}
+		}
+	}
+	for(iit=_individuals.begin();iit!=_individuals.end();++iit){
+		if((*iit)->isOrdinaryFounder()){
+			//
+			// Loop over this person's spouses:
+			// If the spouse is also an ordinary
+			// founder, make the pair original founders.
+			//
+			std::set<Individual*,compareIndividual>::iterator spi;
+			for(spi=(*iit)->getSpouses()->begin();spi!=(*iit)->getSpouses()->end();++spi){
+
+				if(!(*spi)->isOrdinaryFounder()){
+					if((*iit)->isOriginalFounder()) (*iit)->setOriginalFounder(false);
+					if((*spi)->isOriginalFounder()) (*spi)->setOriginalFounder(false);
 					// DEBUG std::cout << ">>> Setting " << (*iit)->getId() << " and " << (*spi)->getId() << " as original founders." << std::endl;
 				}
 			}
