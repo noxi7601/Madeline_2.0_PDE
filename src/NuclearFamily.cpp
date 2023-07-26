@@ -572,6 +572,15 @@ Individual* NuclearFamily::getChildInClassicalOrder(unsigned index){
 	
 }
 
+//
+// getChild:
+//
+Individual* NuclearFamily::getChild(unsigned index){
+
+	return _sortedChildren[index];
+
+}
+
 ///
 /// calculateWidth: Calculates the width of a nuclear family. For individuals with multiple
 ///   mates, the sum of the widths of all the nuclear families is stored on the individual. 

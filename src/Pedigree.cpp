@@ -2457,7 +2457,7 @@ void Pedigree::computePedigreeWidth(const std::string& sortField,bool dobSortOrd
 
 			auto cc = nf->getNumberOfChildren();
 			for (unsigned ci = 0; ci < cc; ci++) {
-				auto c = nf->getChildInClassicalOrder(ci);
+				auto c = nf->getChild(ci);
 				printIndividual(head + "  ", c);
 			}
 		}

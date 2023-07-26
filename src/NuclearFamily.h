@@ -101,6 +101,7 @@ public:
 	unsigned getNumberOfChildren() { return _sortedChildren.size(); }
 	bool getLeftConnectionShiftFlag() { return _leftConnectionShiftFlag; }
 	Individual* getChildInClassicalOrder(unsigned index);
+	Individual* getChild(unsigned index);
 	
 	bool isConsanguinous(void){ 
 		// True if both the mother and father are consanguinous:
