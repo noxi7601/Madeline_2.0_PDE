@@ -632,8 +632,8 @@ void NuclearFamily::calculateWidth(bool classicalOrder){
 					if(_isMaleWithLoopFlags(children[i],j)){ continue; }
 					// The first NF that comes on the right is supposed to be the starting point of drawing this multiple spouse group
 					if(sumLeftWidth == 0 && sumRightWidth == 0 && j % 2 == 0){
-							sumRightWidth += children[i]->getNuclearFamily(j)->getRightWidth();
-							sumLeftWidth +=  children[i]->getNuclearFamily(j)->getLeftWidth();
+						sumRightWidth += children[i]->getNuclearFamily(j)->getRightWidth();
+						sumLeftWidth +=  children[i]->getNuclearFamily(j)->getLeftWidth();
 					}else
 					if(j % 2 == 0){
 						sumRightWidth += children[i]->getNuclearFamily(j)->getTotalWidth();
@@ -886,6 +886,10 @@ void NuclearFamily::draw(Individual* startIndividual,DrawingCanvas& dc,double st
 	double verticalTick       = DrawingMetrics::getVerticalTick();
 	unsigned i=0;
 	Individual* spouse;
+
+	if ((startIndividual->getId().get() == "N00102z") || (startIndividual->getId().get() == "N00100z")) {
+		std::cout << startIndividual->getId().get() << std::endl;
+	}
 	
 	//
 	// Determine which ordering of children to use
@@ -1158,9 +1162,8 @@ void NuclearFamily::draw(Individual* startIndividual,DrawingCanvas& dc,double st
 						spouse = children[i]->getNuclearFamily(j)->getMother();
 					else 
 						spouse = children[i]->getNuclearFamily(j)->getFather();
-					if(spouse->getGender().getEnum() == Gender::FEMALE)
 					// If the spouse is a female and the NF has a loop flag set continue:
-					if((spouse->hasBeenDrawn()  || children[i]->getNuclearFamily(j)->isConsanguinous() || children[i]->getNuclearFamily(j)->hasExternalConnection()) && spouse->getGender().getEnum() == Gender::FEMALE){
+					if((spouse->getGender().getEnum() == Gender::FEMALE) && (spouse->hasBeenDrawn() || children[i]->getNuclearFamily(j)->isConsanguinous() || children[i]->getNuclearFamily(j)->hasExternalConnection())){
 						continue;
 					}
 					children[i]->getNuclearFamily(j)->draw(spouse,dc,xl,currentY+verticalDrop2+iconDiameter/2,classicalOrder);

@@ -44,6 +44,8 @@
 #include <iostream>
 #include <iomanip>
 
+#include <functional>
+
 /////////////////////////////////////
 //
 // Destructor:
@@ -760,8 +762,9 @@ unsigned Pedigree::_getPrimaryDescentTreeIndex(std::set<unsigned>& dt,Individual
 	}
 	for(dtIndex=0;dtIndex<_descentTrees.size();dtIndex++){
 		if(_descentTrees[dtIndex]->getId() == (*sit)){
-			if(increment)
+			if(increment){
 				_descentTrees[dtIndex]->incrementNumberOfExternalConnections();
+			}
 			break;
 		}
 	}
@@ -2436,7 +2439,38 @@ void Pedigree::computePedigreeWidth(const std::string& sortField,bool dobSortOrd
 	_sortAndCalculateDescentTreeWidth();
 	// set left spouse connections flags
 	_setLeftShiftConnectionFlags();
-	
+
+	std::function<void(std::string head, Individual* i)> printIndividual = [&printIndividual](std::string head, Individual* i) -> void {
+		std::cout << head << "id: " + i->getId().get() << std::endl;
+
+		auto nfc = i->getNumberOfNuclearFamilies();
+		for (unsigned nfi = 0; nfi < nfc; nfi++) {
+			auto nf = i->getNuclearFamily(nfi);
+
+			auto f = nf->getFather();
+			auto m = nf->getMother();
+
+			std::cout << head << "width.left: " << nf->getLeftWidth() << ", width.right: " << nf->getRightWidth() << std::endl;
+			std::cout << head << "father.id: " + f->getId().get() << std::endl;
+			std::cout << head << "mother.id: " + m->getId().get() << std::endl;
+
+			auto cc = nf->getNumberOfChildren();
+			for (unsigned ci = 0; ci < cc; ci++) {
+				auto c = nf->getChildInClassicalOrder(ci);
+				printIndividual(head + "  ", c);
+			}
+		}
+	};
+
+	for (auto t = _descentTrees.begin(); t != _descentTrees.end(); t++) {
+		std::cout << "tree: " << (*t)->getId() <<
+				", width.left: " << (*t)->getLeftWidth() <<
+				", width.right: " << (*t)->getRightWidth() <<
+				std::endl;
+
+		auto i = (*t)->getStartIndividual();
+		printIndividual("  ", i);
+	}
 }
 
 ///
