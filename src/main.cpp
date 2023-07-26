@@ -422,8 +422,8 @@ int main( int argc, char *argv[] ){
 	std::cout << "Welcome to Madeline 2.0 PDE for DARWIN-MED+" << std::endl;
 
 	DrawingCanvas::saveFlag = false;
-
 	build = build_real;
+
 	return start();
 #endif
 }

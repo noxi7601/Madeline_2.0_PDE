@@ -73,7 +73,7 @@ public:
 			// Get the name of this icon column:
 			//
 			std::string label = pDC->getName();
-			psvg->drawText(os,x,ystt, plm->fitStringToLabelWidth( label ), std::string(""), label + ".text");
+			psvg->drawText(os,x,ystt, plm->fitStringToLabelWidth( label ), "", label + ".text" );
 			ystt += labelMargin;
 			//
 			// Get the labels for each level in the unique list:

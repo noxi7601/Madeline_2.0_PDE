@@ -801,10 +801,7 @@ unsigned Individual::getDescentTreeIndex() {
 void Individual::setDescentTreeIndex(unsigned value) {
 	_descentTreeIndex = value;
 
-	auto f = _nuclearFamilies.begin();
-	while (f != _nuclearFamilies.end()) {
+	for (auto f = _nuclearFamilies.begin(); f != _nuclearFamilies.end(); f++) {
 		(*f)->setDescentTreeIndex(value);
-
-		f++;
 	}
 }

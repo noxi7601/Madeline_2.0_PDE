@@ -73,7 +73,7 @@ public:
 		for(unsigned i=0;i<labels.size();i++){
 			char label[100];
 			std::snprintf(label, sizeof(label), "label.%d.text", i);
-			psvg->drawText(os,xstt,ystt, plm->fitStringToLabelWidth( labels[i] ), "", label);
+			psvg->drawText(os,xstt,ystt, plm->fitStringToLabelWidth( labels[i] ), "", label );
 			ystt+=lineHeight;
 		}
 		psvg->endGroup(os);

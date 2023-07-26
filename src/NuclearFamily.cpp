@@ -835,14 +835,14 @@ void NuclearFamily::calculateWidth(bool classicalOrder){
 	// left hanging at less than the total NF width:
 	//
 	if( _father->getTotalWidth() < _width.getTotal()){
-		if (_father->getDescentTreeIndex() == _descentTreeIndex) {
+		if(_father->getDescentTreeIndex() == _descentTreeIndex){
 			_father->setLeftWidth( _width.getLeft());
 			_father->setTotalWidth( _width.getTotal());
 			_father->setRightWidth( _width.getRight());
 		}
 	}
 	if( _mother->getTotalWidth() < _width.getTotal()){
-		if (_mother->getDescentTreeIndex() == _descentTreeIndex) {
+		if(_mother->getDescentTreeIndex() == _descentTreeIndex){
 			_mother->setLeftWidth( _width.getLeft());
 			_mother->setTotalWidth( _width.getTotal());
 			_mother->setRightWidth( _width.getRight());
@@ -1754,11 +1754,8 @@ unsigned NuclearFamily::getDescentTreeIndex() {
 void NuclearFamily::setDescentTreeIndex(unsigned value) {
 	_descentTreeIndex = value;
 
-	auto c = _sortedChildren.begin();
-	while (c != _sortedChildren.end()) {
+	for (auto c = _sortedChildren.begin(); c != _sortedChildren.end(); c++) {
 		(*c)->setDescentTreeIndex(value);
-
-		c++;
 	}
 }
 

@@ -496,7 +496,6 @@ void Pedigree::_markRightExternalConnectionFlags(Individual* individual,unsigned
 	
 	// Assign the connectionNumber to the Individual
 	individual->setRightSideOfExternalConnection(connectionNumber);
-
 	// get parents of the Individual
 	Individual* father = individual->getFather();
 	if (father == NULL) {
@@ -1013,10 +1012,10 @@ void Pedigree::_markConnectorIndividuals(Individual* individual,unsigned& loopNu
 						// set DT that has consanguinity
 						// This can be done using the _getPrimaryDescentTree below:
 						unsigned dtIndex = _getPrimaryDescentTreeIndex(dt1,individual,false);
-						if (dtIndex < _descentTrees.size()) {
+						if(dtIndex < _descentTrees.size()){
 							_descentTrees[dtIndex]->setConsanguinity();
 							_dtsHaveConsanguinity=true;
-						} else {
+						}else{
 							std::cout << "Index is out of bounds" << std::endl;
 						}
 					}
@@ -1028,8 +1027,10 @@ void Pedigree::_markConnectorIndividuals(Individual* individual,unsigned& loopNu
 					unsigned spouseDTIndex = _getPrimaryDescentTreeIndex(dt2,(*spouseIt),false);
 					if (dtIndex < _descentTrees.size()) {
 						_descentTrees[dtIndex]->addExternalConnectorPair(individual,(*spouseIt));
-						if (spouseDTIndex < _descentTrees.size()) {
+						if(spouseDTIndex < _descentTrees.size()){
 							_descentTrees[dtIndex]->incrementConnectionsWithDT(_descentTrees[spouseDTIndex]->getId());
+						}else{
+							std::cout << "Index is out of bounds" << std::endl;
 						}
 					}
 					

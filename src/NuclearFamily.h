@@ -57,7 +57,7 @@ public:
 	//
 	// Constructors:
 	//
-	NuclearFamily() { _twinGroupCount=0; _leftConnectionShiftFlag=false; _descentTreeIndex = -1; }
+	NuclearFamily() { _twinGroupCount=0; _leftConnectionShiftFlag=false; _descentTreeIndex=-1; }
 	NuclearFamily(Individual* mother,Individual* father);
 	//
 	// Methods:

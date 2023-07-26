@@ -74,7 +74,7 @@ public:
 	// Note also that the default drop string includes Unicode characters
 	// for ZWSP,NBSP, EN SPACE, EM SPACE etc.:
 	// 
-	static std::string & trim(std::string& s,const std::string &drop = "");
+	static std::string & trim(std::string& s,const std::string &drop = "	 ");
 	// Virtual methods:
 	
 	//
